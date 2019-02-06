@@ -4,78 +4,79 @@
     ViewBag.Title = "ViewAll";
     Layout = null;
 }
-
-<table class="table table-striped table-condensed hover" id="z">
-    <thead>
-        <tr>
-            <th>
-                NIK
-            </th>
-            <th>
-                NAME
-            </th>
-            <th>
-                DATE
-            </th>
-            <th>
-                START HOUR
-            </th>
-            <th>
-                END HOUR
-            </th>
-            <th>
-                TOTAL HOURS
-            </th>
-            <th>
-                REWARD
-            </th>
-            <th>
-                TOTAL REWARD
-            </th>
-            <th>
-                STATUS
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.user.nip)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.user.nama)
-            </td>
-            <td>
-                @String.Format("{0:dd MMM yyyy}", item.tanggal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.jam_mulai)<font size="2rem"> WIB</font>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.jam_selesai)<font size="2rem"> WIB</font>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.total_jam)<font size="2rem"> WIB</font>
-            </td>
-            <td align="right">
-                Rp. @String.Format("{0:n}", item.reward)
-            </td>
-            <td align="right">
-                Rp. @String.Format("{0:n}", item.totalreward)
-            </td>
-            <td>
-                @if (item.status == "Pending")
-                {
-                    <span class="label label-warning">@Html.DisplayFor(modelItem => item.status)</span>
-                }
-                else
-                {
-                    <span class="label label-success">@Html.DisplayFor(modelItem => item.status)</span>
-                }
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+<div class="table table-responsive" style="padding-top:5px !important;">
+    <table class="table table-striped table-condensed hover" id="z">
+        <thead>
+            <tr>
+                <th>
+                    NIK
+                </th>
+                <th>
+                    NAME
+                </th>
+                <th>
+                    DATE
+                </th>
+                <th>
+                    START HOUR
+                </th>
+                <th>
+                    END HOUR
+                </th>
+                <th>
+                    TOTAL HOURS
+                </th>
+                <th>
+                    REWARD
+                </th>
+                <th>
+                    TOTAL REWARD
+                </th>
+                <th>
+                    STATUS
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.user.nip)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.user.nama)
+                    </td>
+                    <td>
+                        @String.Format("{0:dd MMM yyyy}", item.tanggal)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.jam_mulai)<font size="2rem"> WIB</font>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.jam_selesai)<font size="2rem"> WIB</font>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.total_jam)<font size="2rem"> WIB</font>
+                    </td>
+                    <td align="right">
+                        Rp. @String.Format("{0:n}", item.reward)
+                    </td>
+                    <td align="right">
+                        Rp. @String.Format("{0:n}", item.totalreward)
+                    </td>
+                    <td>
+                        @if (item.status == "Pending")
+                        {
+                            <span class="label label-warning">@Html.DisplayFor(modelItem => item.status)</span>
+                        }
+                        else
+                        {
+                            <span class="label label-success">@Html.DisplayFor(modelItem => item.status)</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
