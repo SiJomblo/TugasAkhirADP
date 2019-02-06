@@ -125,8 +125,12 @@ namespace TugasAkhir.Controllers
                         cuti_user cek = db.cuti_user.Find(userDetails.nik);
                         if (cek.valid_jatah <= DateTime.Today)
                         {
+                            while (cek.valid_jatah <= DateTime.Today)
+                            {
+                                DateTime validdate2 = cek.valid_jatah;
+                                cek.valid_jatah = validdate2.AddYears(1);
+                            }
                             DateTime validdate = cek.valid_jatah;
-                            cek.valid_jatah = validdate.AddYears(1);
                             if (cek.jatah_cuti > 0)
                             {
                                 cek.sisa_cuti = cek.jatah_cuti;
