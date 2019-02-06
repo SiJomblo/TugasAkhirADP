@@ -158,6 +158,11 @@ namespace TugasAkhir.Controllers
                             {
                                 DateTime validdate = userDetails.join_date;
                                 valid.valid_rawat = validdate.AddYears(1);
+                                while (valid.valid_rawat <= DateTime.Today)
+                                {
+                                    DateTime validdate2 = valid.valid_rawat;
+                                    valid.valid_rawat = validdate2.AddYears(1);
+                                }
                             }
                             else
                             {
@@ -172,6 +177,17 @@ namespace TugasAkhir.Controllers
                             {
                                 DateTime validkacamata = userDetails.join_date;
                                 valid.valid_kacamata = validkacamata.AddYears(2);
+                                while (valid.valid_kacamata <= DateTime.Today)
+                                {
+                                    DateTime validdate2 = valid.valid_kacamata;
+                                    valid.valid_kacamata = validdate2.AddYears(2);
+                                }
+                                int tai = Convert.ToInt32(userDetails.join_date.Year);
+                                if (tai%2 == 0)
+                                {
+                                    DateTime validdate2 = valid.valid_kacamata;
+                                    valid.valid_kacamata = validdate2.AddYears(1);
+                                }
                             }
                             else
                             {
