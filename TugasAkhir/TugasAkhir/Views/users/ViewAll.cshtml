@@ -4,90 +4,91 @@
     ViewBag.Title = "ViewAll";
     Layout = null;
 }
-
-<table class="table table-striped table-condensed hover" id="a">
-    <thead>
-        <tr>
-            <th>
-                NIK
-            </th>
-            <th>
-                NAME
-            </th>
-            <th>
-                E-MAIL
-            </th>
-            <th>
-                PLACEMENT
-            </th>
-            <th>
-                BIRTHDAY
-            </th>
-            <th>
-                JOIN DATE
-            </th>
-            <th>
-                LEVEL
-            </th>
-            <th>
-                STATUS
-            </th>
-            <th>
-                OPTION
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.nip)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nama)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.penempatan)
-            </td>
-            <td>
-                @String.Format("{0:dd MMM yyyy}", item.tanggal_lahir)
-            </td>
-            <td>
-                @String.Format("{0:dd MMM yyyy}", item.join_date)
-            </td>
-            <td>
-                @if (item.jabatan == "k")
-                {
-                    <span class="label label-primary">Employee</span>
-                }
-                else
-                {
-                    <span class="label label-warning">Admin</span>
-                }
-            </td>
-            <td>
-                @if (item.status_kerja == "Aktif")
-                {
-                    <span class="label label-success">Active</span>
-                }
-                else
-                {
-                    <span class="label label-danger">Non-Active</span>
-                }
-            </td>
-            <td>
-                <a onclick="Edit('@Url.Action("AddorEdit", "users", new { id=item.nik})')" title="Edit"><i class="glyphicon glyphicon-edit"></i></a> |
-                <a onclick="Details('@Url.Action("Details", "users", new { id=item.nik})')" title="Details"><i class="glyphicon glyphicon-eye-open"></i></a>
-                @if (Session["jabatan"].ToString() == "s")
-                {
-                    <a onclick="Delete('@Url.Action("Delete", "users", new { id=item.nik})')" title="Delete">|<i class="glyphicon glyphicon-trash"></i></a>
-                }
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+<div class="table table-responsive">
+    <table class="table table-striped table-condensed hover" id="a">
+        <thead>
+            <tr>
+                <th>
+                    NIK
+                </th>
+                <th>
+                    NAME
+                </th>
+                <th>
+                    E-MAIL
+                </th>
+                <th>
+                    PLACEMENT
+                </th>
+                <th>
+                    BIRTHDAY
+                </th>
+                <th>
+                    JOIN DATE
+                </th>
+                <th>
+                    LEVEL
+                </th>
+                <th>
+                    STATUS
+                </th>
+                <th>
+                    OPTION
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nip)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nama)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.penempatan)
+                    </td>
+                    <td>
+                        @String.Format("{0:dd MMM yyyy}", item.tanggal_lahir)
+                    </td>
+                    <td>
+                        @String.Format("{0:dd MMM yyyy}", item.join_date)
+                    </td>
+                    <td>
+                        @if (item.jabatan == "k")
+                        {
+                            <span class="label label-primary">Employee</span>
+                        }
+                        else
+                        {
+                            <span class="label label-warning">Admin</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.status_kerja == "Aktif")
+                        {
+                            <span class="label label-success">Active</span>
+                        }
+                        else
+                        {
+                            <span class="label label-danger">Non-Active</span>
+                        }
+                    </td>
+                    <td>
+                        <a onclick="Edit('@Url.Action("AddorEdit", "users", new { id=item.nik})')" title="Edit"><i class="glyphicon glyphicon-edit"></i></a> |
+                        <a onclick="Details('@Url.Action("Details", "users", new { id=item.nik})')" title="Details"><i class="glyphicon glyphicon-eye-open"></i></a>
+                        @if (Session["jabatan"].ToString() == "s")
+                        {
+                            <a onclick="Delete('@Url.Action("Delete", "users", new { id=item.nik})')" title="Delete">|<i class="glyphicon glyphicon-trash"></i></a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
