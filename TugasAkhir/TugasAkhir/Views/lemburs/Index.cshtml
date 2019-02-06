@@ -1,0 +1,242 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Master Lembur</h3>
+<hr />
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#pending">Pending</a></li>
+    <li><a data-toggle="tab" href="#riwayatlembur">Riwayat</a></li>
+    <li><a data-toggle="tab" href="#addlembur">Add</a></li>
+</ul>
+<div class="tab-content">
+    <div id="pending" class="tab-pane fade in active">@Html.Action("ListLembur")</div>
+    <div id="riwayatlembur" class="tab-pane fade in">@Html.Action("RiwayatLembur")</div>
+    <div id="addlembur" class="tab-pane fade in">@Html.Action("Create")</div>
+</div>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src=" https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        function activatejQueryTable() {
+            $('#a').DataTable();           
+            $('#z').DataTable();
+        }
+        $(function () {
+            activatejQueryTable();
+        });
+
+        $('.cs').change(function () {
+            var time1 = $("#jam_mulai").val().split(':'), time2 = $("#jam_selesai").val().split(':');
+            var hours1 = parseInt(time1[0]),
+                hours2 = parseInt(time2[0]),
+                mins1 = parseInt(time1[1]),
+                mins2 = parseInt(time2[1]);
+            var hours = hours2 - hours1, mins = 0;
+
+            // get hours
+            if (hours < 0) hours = 24 + hours;
+
+            // get minutes
+            if (mins2 >= mins1) {
+                mins = mins2 - mins1;
+            }
+            else {
+                mins = (mins2 + 60) - mins1;
+                hours--;
+            }
+
+            if (hours < 10) {
+                jam = "0";
+            } else {
+                jam = "";
+            }
+            if (mins < 10) {
+                min = "0";
+            } else {
+                min = "";
+            }
+
+            hours = jam + hours + ":" + min + mins;
+            $("#hasil").val(hours);
+        
+            });
+
+        $('#ddnama').change(function () {
+            nik = $('#ddnama').val();
+            $.ajax({
+                type: "POST",
+                url: "lemburs/JsonGetNIP",
+                data: { id: nik },
+                success: function (result) {
+                    $('#textboxnip').val(result);
+                },
+            });
+        });
+
+        $('#ddnama').change(function () {
+            $('#textboxnik').val($('#ddnama').val());
+        });
+
+       
+            $('document').ready(function(){
+                $("#ddnama").chosen();
+            })
+
+        function GetRiwayatLembur() {
+            $.ajax({
+                type: "POST",
+                url: "lemburs/JsonRiwayatLembur",
+                success: function (result) {
+                    $("#riwayatlembur").html(result.html);
+                    if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                        activatejQueryTable();
+                    }
+                },
+            });
+        }
+
+        function EditStatusLembur() {           
+            let formdata = $("#asu").serialize();
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: "Status reward akan diubah ke finish!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("EditStatus", "lemburs")',
+                        data: formdata,
+                        success: function (response) {
+                            if (response.success) {
+                                GetRiwayatLembur();
+                                $("#pending").html(response.html);
+                                $.notify(response.message, "success");
+                                if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                                    activatejQueryTable();
+                                    loadcheck();
+                                }
+                            }
+                            else {
+                                $.notify(response.message, "error");
+                            }
+                        }
+                    });
+                }                
+            });
+        }
+
+        function DeleteLembur() {                        
+            let formdata = $("#asu").serialize();
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: "Data lembur ini akan dihapus!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("DeleteLembur", "lemburs")',
+                        data: formdata,
+                        success: function (response) {
+                            if (response.success) {                               
+                                $("#pending").html(response.html);
+                                $.notify(response.message, "warn");
+                                if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                                    activatejQueryTable();
+                                    loadcheck();
+                                }
+                            }
+                            else {
+                                $.notify(response.message, "error");
+                            }
+                        }
+                       
+                    });
+                }               
+            });           
+        }
+
+        //Script Select All prosess lembur
+        loadcheck();
+        function loadcheck() {       
+            $('#select_all').on('click', function () {
+                if (this.checked) {
+                    $('.check').each(function () {
+                        this.checked = true;
+                    })
+                } else {
+                    $('.check').each(function () {
+                        this.checked = false;
+                    })
+                }
+            });
+
+            $('.check').on('click', function () {
+                if ($('.check:checked').length == $('.check').length) {
+                    $('#select_all').prop('checked', true)
+                } else {
+                    $('#select_all').prop('checked', false)
+                }
+            })           
+        }
+
+        function refreshLembur() {
+            document.getElementById("jam_mulai").value = "";
+            document.getElementById("jam_selesai").value = "";
+            document.getElementById("hasil").value = "";
+            document.getElementById("reward").value = "";
+            document.getElementById("tanggal").value = "";
+
+        }
+
+        function ajaxaddlembur(form) {
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                var ajaxConfig = {
+                    type: 'POST',
+                    url: form.action,
+                    data: new FormData(form),
+                    success: function (response) {
+                        if (response.success) {
+                            $("#pending").html(response.html);
+                            $('ul.nav.nav-tabs a:eq(0)').tab('show');
+                            $.notify(response.message, "success");
+                            if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                                activatejQueryTable();
+                                loadcheck();
+                            }
+                            refreshLembur();
+                        }
+                        else {
+                            $.notify(response.message, "error");
+                        }
+                    }
+                }
+                if ($(form).attr('enctype') == "multipart/form-data") {
+                    ajaxConfig["contentType"] = false;
+                    ajaxConfig["processData"] = false;
+                }
+                $.ajax(ajaxConfig);
+            }
+            return false;
+        }
+    </script>
+
+}

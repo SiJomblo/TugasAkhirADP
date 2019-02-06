@@ -1,0 +1,211 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layoutuser.cshtml";
+}
+<h3>Halaman Request Surat</h3>
+<a href="#" class="btn btn-success text-right" onclick="modal()"><i class="fa fa-plus"></i> Add Request Surat</a>
+<hr />
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#listrequest">List Request</a></li>
+    <li><a data-toggle="tab" href="#listproses">List Process</a></li>
+    <li><a data-toggle="tab" href="#riwayatrequest">History</a></li>
+    <li id="tab1"><a data-toggle="tab" href="#detailsurat">Details</a></li>
+    <li id="tab2"><a data-toggle="tab" href="#editsurat">Edit</a></li>
+</ul>
+<div class="tab-content">
+    <div id="listrequest" class="tab-pane fade in active">@Html.Action("ListAllSurat")</div>
+    <div id="listproses" class="tab-pane fade in">@Html.Action("ProcessSurat")</div>
+    <div id="riwayatrequest" class="tab-pane fade in">@Html.Action("RiwayatAllSurat")</div>
+    <div id="detailsurat" class="tab-pane fade in">@Html.Action("Details")</div>
+    <div id="editsurat" class="tab-pane fade in">@Html.Action("EditSurat")</div>
+</div>
+
+<div id="gukguk" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- konten modal-->
+        <div class="modal-content" style="border-radius: 20px;" >
+            <!-- heading modal -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h1 class="modal-title text-center" style="font-family:'Engravers MT'; font-size:xx-large;"><b><i class="fa fa-plus"></i> Add Request Surat</b></h1>
+            </div>
+            <!-- body modal -->
+            <div class="modal-body">
+                @Html.Action("RequestSurat")
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src=" https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        function activatejQueryTable() {
+            $('#a').DataTable();
+            $('#b').DataTable();
+            $('#c').DataTable();
+        }
+        $(function () {
+            activatejQueryTable();
+        });
+
+        function modal() {
+            $("#gukguk").modal("show");
+        }
+
+
+        function ajaxrequestallsurat(form) {
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                var ajaxConfig = {
+                    type: 'POST',
+                    url: form.action,
+                    data: new FormData(form),
+                    success: function (response) {
+                        if (response.success) {
+                            $("#gukguk").modal("hide");
+                            hidetab();
+                            $("#listrequest").html(response.html);
+                            $('ul.nav.nav-tabs a:eq(0)').tab('show');
+                            $.notify(response.message, "success");
+                            if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                                activatejQueryTable();
+                            }
+                        }
+                        else {
+                            $.notify(response.message, "error");
+                        }
+                    }
+                }
+                if ($(form).attr('enctype') == "multipart/form-data") {
+                    ajaxConfig["contentType"] = false;
+                    ajaxConfig["processData"] = false;
+                }
+                $.ajax(ajaxConfig);
+            }
+            return false;
+        }
+
+        //Awal Hide Tab
+        $(document).ready(function () { hidetab() });
+
+        function hidetab() {
+            $('#tab1').hide();
+            $('#tab2').hide();
+        }
+
+        //Ahkir Hide Tab
+
+        $(document).ready(function () { hideform() });
+
+        function hideform() {
+            $('.formsurat').hide()
+            $('#1').show();
+        }
+
+        $('#jenissurat').change(function () {
+            var value = this.value;
+            $('.formsurat').hide()
+            $('#' + value).show();
+        });
+
+
+        function DetailSurat(url) {
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (response) {
+                    $('#tab1').show();
+                    $('#tab2').hide();
+                    $("#detailsurat").html(response);
+                    $('ul.nav.nav-tabs a:eq(3)').tab('show');
+                }
+            });
+        }
+
+        function EditSurat(url) {
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (response) {
+                    $('#tab2').show();
+                    $('#tab1').hide();
+                    $("#editsurat").html(response);
+                    $('ul.nav.nav-tabs a:eq(4)').tab('show');
+                }
+            });
+        }
+
+        function ajaxeditsurat(form) {
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                var ajaxConfig = {
+                    type: 'POST',
+                    url: form.action,
+                    data: new FormData(form),
+                    success: function (response) {
+                        if (response.success) {
+                            $("#detailsurat").html(response.html);
+                            $('#tab1').show();
+                            $('ul.nav.nav-tabs a:eq(3)').tab('show');
+                            $('#tab2').hide();
+                            $.notify(response.message, "success");
+                            if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                                activatejQueryTable();
+                            }
+                        }
+                        else {
+                            $.notify(response.message, "error");
+                        }
+                    }
+                }
+                if ($(form).attr('enctype') == "multipart/form-data") {
+                    ajaxConfig["contentType"] = false;
+                    ajaxConfig["processData"] = false;
+                }
+                $.ajax(ajaxConfig);
+            }
+            return false;
+        }
+
+        function DeleteSurat(url) {
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: "Request Surat Anda Akan Dibatalkan!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        success: function (response) {
+                            if (response.success) {
+                                hidetab();
+                                $("#listrequest").html(response.html);
+                                $.notify(response.message, "warn");
+                                if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                                    activatejQueryTable();
+                                }
+                            }
+                            else {
+                                $.notify(response.message, "error");
+                            }
+                        }
+                    });
+                }
+            });
+        }              
+
+    </script>
+}

@@ -1,0 +1,147 @@
+﻿@model TugasAkhir.Models.claim_medical
+
+@{
+    ViewBag.Title = "Details";
+    Layout = null;
+}
+
+<div>
+    <hr />
+    <div class="col-md-6">
+        <table class="table table-striped">
+            <tr>
+                <th>NIK</th>
+                <td> @Html.DisplayFor(model => model.saldo_medical.user.nip)</td>
+            </tr>
+            <tr>
+                <th>Nama</th>
+                <td> @Html.DisplayFor(model => model.saldo_medical.user.nama)</td>
+            </tr>
+            <tr>
+                <th>E-Mail</th>
+                <td> @Html.DisplayFor(model => model.saldo_medical.user.email)</td>
+            </tr>
+            <tr>
+                <th> Tanggal </th>
+                <td> @String.Format("{0:dd MMMM yyyy}", Model.tanggal)</td>
+            </tr>
+            <tr>
+                <th>Type Perawatan</th>
+                <td> @Html.DisplayFor(model => model.tipe_perawatan)</td>
+            </tr>
+            <tr>
+                <th>Tanggal Perawatan</th>
+                <td> @String.Format("{0:dd MMMM yyyy}", Model.tanggal_perawatan)</td>
+            </tr>
+            <tr>
+                <th>Nama Pasien</th>
+                <td> @Html.DisplayFor(model => model.nama_pasien)</td>
+            </tr>
+            @if (Model.status == "Reject")
+            {
+                <tr>
+                    <th>Alasan Reject</th>
+                    <td> @Html.DisplayFor(model => model.keterangan)</td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    <div class="col-md-6">
+        <table class="table table-striped">
+            <tr>
+                <th>Hubungan</th>
+                <td> @Html.DisplayFor(model => model.hubungan)</td>
+            </tr>
+            <tr>
+                <th>Nama Dokter</th>
+                <td> @Html.DisplayFor(model => model.nama_dokter)</td>
+            </tr>
+            <tr>
+                <th>Diagnosa</th>
+                <td> @Html.DisplayFor(model => model.diagnosa)</td>
+            </tr>
+            <tr>
+                <th>No. Telpon RS</th>
+                <td> @Html.DisplayFor(model => model.no_telp)</td>
+            </tr>
+            <tr>
+                <th>Lokasi RS</th>
+                <td> @Html.DisplayFor(model => model.lokasi_RS)</td>
+            </tr>
+            <tr>
+                <th>Total Tagihan</th>
+                <td>Rp. @String.Format("{0:n}", Model.total_tagihan)</td>
+            </tr>
+            @if (Model.status == "Request" && Session["jabatan"].ToString() == "a" || Session["jabatan"].ToString() == "s")
+            {
+                <tr>
+                    <th>Saldo :</th>
+                    <td>
+                        Rp.
+                        @if (Model.tipe_perawatan == "Rawat Inap")
+                        {
+                            @String.Format("{0:n}", Model.saldo_medical.saldo_rawatinap)
+                        }
+                        else if (Model.tipe_perawatan == "Rawat Jalan")
+                        {
+                            @String.Format("{0:n}", Model.saldo_medical.saldo_rawatjalan)
+                        }
+                        else if (Model.tipe_perawatan == "Kacamata")
+                        {
+                            @String.Format("{0:n}", Model.saldo_medical.saldo_kacamata)
+                        }
+                    </td>
+                </tr>
+            }
+            @if (Model.status == "Finish")
+            {
+                <tr>
+                    <th>Total Claim</th>
+                    <td> @Html.DisplayFor(model => model.total_claim)</td>
+                </tr>
+            }
+            <tr>
+                <th> Status</th>
+                <td>
+                    @if (Model.status == "Request")
+                    {
+                        <span class="label label-info">@Html.DisplayFor(modelItem => Model.status)</span>
+                    }
+                    else if (Model.status == "Reject")
+                    {
+                        <span class="label label-danger">@Html.DisplayFor(modelItem => Model.status)</span>
+                    }
+                    else
+                    {
+                        <span class="label label-success">@Html.DisplayFor(modelItem => Model.status)</span>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th>Download</th>
+                <td>
+                    @if (Model.file_kwintasi == null)
+                    {
+                        <font color="red">File Kwitansi Tidak Ada</font>
+                    }
+
+                    else
+                    {
+                        <a href="@Url.Action("Download", "claim_medical", new { filepath = Model.file_kwintasi.ToString() })" class="btn btn-primary"><span class="fa fa-download"></span> Download</a>
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+    <hr style="border: 1px solid #eaeaea" />
+    <div class="col-md-offset-11">
+        @if (Model.status == "Request" && Session["jabatan"].ToString() != "k")
+        {
+            <a onclick="AcceptClaim('@Url.Action("AcceptClaim", "claim_medical", new { id=Model.id_claim})')" class="btn btn-success" id="btn-accept" title="Accept"><span class="fa fa-check-circle"></span>  Accept</a>
+        }
+    </div>
+</div>
+
+
+

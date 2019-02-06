@@ -1,0 +1,93 @@
+﻿@model TugasAkhir.Models.user
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Login - Menu</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/MyStyle.css" rel="stylesheet" />
+    <style>
+        .info-panel {
+            box-shadow: 0 3px 20px rgba(0,0,0,0.5);
+            border-radius: 50px;
+            height: 80px;
+            width: 80px;
+            margin-top: -60px;
+            margin-bottom: 10px;
+            background-size: cover;
+            background-image: url(../../_Asets/images/ACE.jpg);
+        }
+        /*karna sweeta alert2 tidak suport dengan bootstrap 3 supurtnya dengan bootstrap 4*/
+        .swal2-popup {
+            font-size: 1.6rem !important;
+            font-family: 'Times New Roman' !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-4" style="margin-top:80px;">
+                    <div align="center">
+                        <div class="wall">
+                            <div class="info-panel">
+                            </div>
+                            @using (Html.BeginForm("Validate", "Login", FormMethod.Post))
+                            {
+                                <div class="input-group" style=" padding-top: 30px; font-family:'Californian FB';">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Masukkan E-Mail Anda", @required = "required", @autofocus = "autofocus", @type = "email" } })
+                                </div>
+                                <div class="input-group" style=" padding-top: 7px; font-family:'Californian FB';">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Masukkan Password Anda", @required = "required", @type = "password" } })
+                                </div><br>
+                                <div class="input-group" style="padding-top: 8px;">
+                                    <button type="submit" name="login" class="tombollogin" width="30px"><span class="glyphicon glyphicon-log-in"></span>  Sign In</button>
+                                </div>
+                                <p style="margin-top:10px; font-family:'Gloucester MT'; font-size:larger; color:orangered;">
+                                    Forgot Your Password? <a href="#" data-toggle="modal" data-target="#myModal" style="text-decoration-line:none;">Click Here</a>
+                                </p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Lupa passwoard -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- konten modal-->
+            <div class="modal-content">
+                <!-- heading modal -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h1 class="modal-title text-center" style="font-family:'Engravers MT'; font-size:xx-large;"><b>LUPA PASSWORD</b></h1>
+                </div>
+                <!-- body modal -->
+                <div class="modal-body">
+                    <h3 style="font-family:'Californian FB'">Jika Lupa Password Hubungi Pihak Admin or Hubungin Nomer ini <a href="#" style="text-decoration-line:none;">0818-0800-1085</a></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/_Asets/sweetalert/dist/sweetalert2.all.js"></script>
+    @Html.Raw(ViewBag.msg)
+
+</body>
+</html>
+

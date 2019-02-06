@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Cek Cuti";
+    Layout = "~/Views/Shared/_Layoutuser.cshtml";
+}
+<h3>Halaman Cuti</h3>
+<a href="#" data-toggle="modal" data-target="#myModal" style="text-decoration-line:none;" class="btn btn-primary"><i class="fa fa-money-bill-alt"></i> Cek Cuti</a>
+<hr />
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#riwayatcuti">Riwayat Cuti</a></li>
+    <li><a data-toggle="tab" href="#cutimassal">Riwayat Cuti Massal</a></li>
+    <li id="tab1"><a data-toggle="tab" href="#detailcuti">Detail Cuti</a></li>
+</ul>
+<div class="tab-content">
+    <div id="riwayatcuti" class="tab-pane fade in active">@Html.Action("RiwayatCutiK")</div>
+    <div id="cutimassal" class="tab-pane fade in">@Html.Action("CutiMassal")</div>
+    <div id="detailcuti" class="tab-pane fade in">@Html.Action("Details")</div>
+</div>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- konten modal-->
+        <div class="modal-content" style="border-radius: 20px;">
+            <!-- heading modal -->
+            <div class="modal-header">                
+                <h1 class="modal-title text-center" style="font-family:'Engravers MT'; font-size:xx-large;"><i class="fa fa-bullhorn"></i> <b>Info Cuti Anda</b></h1>
+            </div>
+            <!-- body modal -->
+            <div class="modal-body">                
+                <h3 style="font-family:'Californian FB'">Jatah cuti anda : <b>@ViewBag.jatah</b> s/d <b>@String.Format("{0:dd MMMM yyyy}", ViewBag.validjatah)</b></h3><br />
+                <h3 style="font-family:'Californian FB'">Sisa cuti anda : <b>@ViewBag.sisa</b> s/d <b>@String.Format("{0:dd MMMM yyyy}", ViewBag.validsisa)</b></h3><br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-window-close"></i> Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src=" https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        function activatejQueryTable() {
+            $('#a').DataTable();
+            $('#b').DataTable();
+        }
+        $(function () {
+            activatejQueryTable();
+        });
+
+        $('#tab1').hide();
+
+
+        function DetailCutiK(url) {
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (response) {
+                    $('#tab1').show();
+                    $("#detailcuti").html(response);
+                    $('ul.nav.nav-tabs a:eq(1)').tab('show');
+                }
+            });
+        }
+
+    </script>
+}

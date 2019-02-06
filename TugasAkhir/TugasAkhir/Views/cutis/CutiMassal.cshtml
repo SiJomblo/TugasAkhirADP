@@ -1,0 +1,45 @@
+﻿@model IEnumerable<TugasAkhir.Models.cuti_massal>
+
+@{
+    ViewBag.Title = "ViewAll";
+    Layout = null;
+}
+<div class="table table-responsive" style="padding-top:5px !important;">
+    <table class="table table-striped table-condensed hover" id="b">
+        <thead>
+            <tr>
+                <th>
+                    DATE
+                </th>
+                <th>
+                     ANNOTATION
+                </th>
+                @if (Session["jabatan"].ToString() != "k")
+                {
+                <th>
+                    ADDED BY 
+                </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @String.Format("{0:dd MMMM yyyy}", item.tanggal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.keterangan)
+                </td>              
+                @if (Session["jabatan"].ToString() != "k")
+                {
+                <td>
+                    @Html.DisplayFor(modelItem => item.oleh)
+                </td>
+                }              
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,38 @@
+﻿@model TugasAkhir.Models.saldo_awal
+
+@{
+    ViewBag.Title = "Add New";
+    Layout = null;
+}
+
+
+@using (Html.BeginForm("PopUpSaldo", "claim_medical", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "return ajaxsaldoawal(this);" })){
+           
+                <div class="form-group">
+                    @Html.LabelFor(model => model.default_inap, "Saldo Rawat Inap", htmlAttributes: new { @class = "control-label col-md-4" })
+                   
+                        @Html.EditorFor(model => model.default_inap, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.default_inap, "", new { @class = "text-danger" })
+                   
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.default_jalan, "Saldo Rawat Jalan", htmlAttributes: new { @class = "control -label col-md-4" })
+                   
+                        @Html.EditorFor(model => model.default_jalan, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number" } })
+                        @Html.ValidationMessageFor(model => model.default_jalan, "", new { @class = "text-danger" })
+                    
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.default_kacamata, "Saldo Kacamata", htmlAttributes: new { @class = "control-label col-md-4" })
+
+                    @Html.EditorFor(model => model.default_kacamata, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number" } })
+                    @Html.ValidationMessageFor(model => model.default_kacamata, "", new { @class = "text-danger" })
+
+                </div>               
+          
+            <hr style="border:2px double #eaeaea;" />
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Submit</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle"></i> Close</button>
+            </div>
+}

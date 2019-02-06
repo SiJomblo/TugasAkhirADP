@@ -1,0 +1,40 @@
+﻿body {
+    background-image: url(../_Asets/images/jason-blackeye-212990-unsplash.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+h3 {
+    margin-top: 10px;
+    text-align: center;
+}
+
+h2 {
+    margin-top: 10px;
+    text-align: center;
+    color: blue;
+}
+
+.tombollogin {
+    background: blue;
+    color: white;
+    width: 300px;
+    font-family: times new roman;
+    font-size: 12pt;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+}
+
+    .tombollogin:hover {
+        background: green;
+    }
+
+.wall {
+    background-image: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+    border-radius: 30px;
+    padding: 16px;
+    padding-left: 25px;
+    padding-right: 25px;
+    box-shadow: 0 3px 20px rgba(0,0,0,1);
+}

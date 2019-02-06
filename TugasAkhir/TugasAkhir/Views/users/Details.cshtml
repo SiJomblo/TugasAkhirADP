@@ -1,0 +1,211 @@
+﻿@model TugasAkhir.Models.user
+
+@{
+    ViewBag.Title = "Details";
+    Layout = null;
+}
+
+<div class="row text-center">
+    <img src="@Url.Content(Model.foto_profil)" style="margin:10px;border:1px;border: 5px solid #eaeaea;box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);" width="150" height="150" class="img-circle" />
+    <h3> @Html.DisplayFor(model => model.nama)</h3>
+    <h4> @Html.DisplayFor(model => model.nip)</h4>
+    <h4>
+        @if (Model.status_kerja == "Aktif")
+        {
+        <span class="label label-success">Active</span>
+        }
+        else
+        {
+        <span class="label label-danger">Non-Active</span>
+        }
+    </h4>
+</div>
+
+<div>
+    <hr />
+    <div class="col-md-5 col-md-offset-1">
+        <table class="table table-striped">
+            <tr>
+                <th> E-Mail</th>
+                <td> @Html.DisplayFor(model => model.email)</td>
+            </tr>          
+            <tr>
+                <th> Tempat, Tgl Lahir</th>
+                <td> @Html.DisplayFor(model => model.tempat_lahir), @String.Format("{0:dd MMMM yyyy}", Model.tanggal_lahir)</td>
+            </tr>
+            <tr>
+                <th> Jenis Kelamin</th>
+                @if (Model.jenis_kelamin == "L")
+                {
+                    <td>Laki-Laki </td>
+                }
+                else
+                {
+                    <td>Perempuan</td>
+                }
+            </tr>
+            <tr>
+                <th> No. Handphone</th>
+                <td> @Html.DisplayFor(model => model.no_hp)</td>
+            </tr>
+            <tr>
+                <th> No. KTP</th>
+                <td> @Html.DisplayFor(model => model.no_ktp)</td>
+            </tr>
+            <tr>
+                <th> Alamat Domisili</th>
+                <td> @Html.DisplayFor(model => model.alamat_domisili)</td>
+            </tr>
+            <tr>
+                <th> Alamat KTP</th>
+                <td> @Html.DisplayFor(model => model.alamat_ktp)</td>
+            </tr>
+            <tr>
+                <th> Pendidikan</th>
+                <td> @Html.DisplayFor(model => model.pendidikan_akhir)</td>
+            </tr>
+            <tr>
+                <th> Jurusan</th>
+                <td> @Html.DisplayFor(model => model.jurusan)</td>
+            </tr>
+            <tr>
+                <th> Agama</th>
+                <td> @Html.DisplayFor(model => model.agama)</td>
+            </tr>
+            <tr>
+                <th> NPWP</th>
+                <td> @Html.DisplayFor(model => model.npwp)</td>
+            </tr>
+            <tr>
+                <th> Status Pajak</th>
+                <td> @Html.DisplayFor(model => model.status_pajak)</td>
+            </tr>
+            <tr>
+                <th> No BPJS</th>
+                <td> @Html.DisplayFor(model => model.bpjs)</td>
+            </tr>
+            <tr>
+                <th> Join Date</th>
+                <td> @String.Format("{0:dd MMMM yyyy}", Model.join_date)</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-5">
+        <table class="table table-striped">
+
+            <tr>
+                <th> Nomer Rekening</th>
+                <td> @Html.DisplayFor(model => model.no_rekening)</td>
+            </tr>
+            <tr>
+                <th> Jabatan</th>
+                @if (Model.jabatan == "a")
+                {
+                    <td>Admin </td>
+                }
+                else if (Model.jabatan == "s")
+                {
+                    <td>Super Admin </td>
+                }
+                else
+                {
+                    <td>Employee</td>
+                }
+            </tr>
+            <tr>
+                <th> Placement</th>
+                <td> @Html.DisplayFor(model => model.penempatan)</td>
+            </tr>
+            <tr>
+                <th> Position</th>
+                <td> @Html.DisplayFor(model => model.posisi)</td>
+            </tr>
+            <tr>
+                <th> Status</th>
+                <td> @Html.DisplayFor(model => model.status_kerja)</td>
+            </tr>
+
+            <tr>
+                <th> File NPWP </th>
+                <td>
+                    @if (Model.file_npwp == null)
+                    {
+                        <font color="red">File NPWP Tidak Ada</font>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Download", "users", new { filepath = Model.file_npwp.ToString() })"><span class="fa fa-download"></span> Download</a>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th> File KTP</th>
+                <td>
+                    @if (Model.file_ktp == null)
+                    {
+                        <font color="red">File KTP Tidak Ada</font>
+                    }
+
+                    else
+                    {
+                        <a href="@Url.Action("Download", "users", new { filepath = Model.file_ktp.ToString() })"><span class="fa fa-download"></span> Download</a>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th> File Ijazah</th>
+                <td>
+                    @if (Model.file_ijasah == null)
+                    {
+                        <font color="red">File Ijazah Tidak Ada</font>
+                    }
+
+                    else
+                    {
+                        <a href="@Url.Action("Download", "users", new { filepath = Model.file_ijasah.ToString() })"><span class="fa fa-download"></span> Download</a>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th> File Rekening</th>
+                <td>
+                    @if (Model.file_rekening == null)
+                    {
+                        <font color="red">File Rekening Tidak Ada</font>
+                    }
+
+                    else
+                    {
+                        <a href="@Url.Action("Download", "users", new { filepath = Model.file_rekening.ToString() })"><span class="fa fa-download"></span> Download</a>
+                    }
+                </td>
+            </tr>
+            @if (Model.jabatan == "k")
+            {
+                <tr>
+                    <th> Saldo Medical Rawat Inap</th>
+                    <td> Rp. @String.Format("{0:n}", Model.saldo_medical.saldo_rawatinap) s/d @String.Format("{0:dd MMMM yyyy}", Model.saldo_medical.valid_rawat)</td>
+                </tr>
+                <tr>
+                    <th> Saldo Medical Rawat Jalan</th>
+                    <td> Rp. @String.Format("{0:n}", Model.saldo_medical.saldo_rawatjalan) s/d @String.Format("{0:dd MMMM yyyy}", Model.saldo_medical.valid_rawat)</td>
+                </tr>
+                <tr>
+                    <th> Saldo Medical Kacamata</th>
+                    <td> Rp. @String.Format("{0:n}", Model.saldo_medical.saldo_kacamata) s/d @String.Format("{0:dd MMMM yyyy}", Model.saldo_medical.valid_kacamata)</td>
+                </tr>
+                <tr>
+                    <th> Jatah Cuti</th>
+                    <td> @Html.DisplayFor(model => model.cuti_user.jatah_cuti) s/d @String.Format("{0:dd MMMM yyyy}", Model.cuti_user.valid_jatah)</td>
+                </tr>
+                <tr>
+                    <th> Sisa Jatah Cuti (6 bulan)</th>
+                    <td> @Html.DisplayFor(model => model.cuti_user.sisa_cuti) s/d @String.Format("{0:dd MMMM yyyy}", Model.cuti_user.valid_sisa)</td>
+                </tr>
+            }           
+        </table>
+    </div>  
+</div>
+
+
+

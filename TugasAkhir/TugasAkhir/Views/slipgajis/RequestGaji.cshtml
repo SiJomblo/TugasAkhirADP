@@ -1,0 +1,74 @@
+﻿@model IEnumerable<TugasAkhir.Models.slipgaji>
+
+@{
+    ViewBag.Title = "RequestGaji";
+    Layout = null;
+}
+<div class="table table-responsive" style="padding-top:5px !important;">
+    <table class="table table-striped table-condensed hover" id="a">
+        <thead>
+            <tr>
+                <th>
+                    NIK
+                </th>
+                <th>
+                    NAME
+                </th>
+                <th>
+                    DATE
+                </th>
+                <th>
+                    START MONTH OF SALARY SLIP
+                </th>
+                <th>
+                    FINISH MONTH OF SALARY SLIP
+                </th>
+                <th>
+                    STATUS
+                </th>
+                <th>
+                    OPTION
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.user.nip)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.user.nama)
+                    </td>
+                    <td>
+                        @String.Format("{0:dd MMMM yyyy}", item.tanggal)
+                    </td>
+                    <td>
+                        @String.Format("{0:MMMM yyyy}", item.durasi_awal)
+                    </td>
+                    <td>
+                        @String.Format("{0:MMMM yyyy}", item.durasi_akhir)
+                    </td>
+                    <td>
+                        @if (item.status == "Request")
+                        {
+                            <span class="label label-info">@Html.DisplayFor(modelItem => item.status)</span>
+                        }
+                        else if (item.status == "Process")
+                        {
+                            <span class="label label-warning">@Html.DisplayFor(modelItem => item.status)</span>
+                        }
+                        else
+                        {
+                            <span class="label label-success">@Html.DisplayFor(modelItem => item.status)</span>
+                        }
+                    </td>
+                    <td>
+                        <a onclick="EditStatus('@Url.Action("EditStatus", "slipgajis", new { id=item.id_slip})')" class="btn btn-primary" id="btn-proses" title="Lanjut Ke Process">Ok</a>
+                    </td>
+                </tr> 
+            }
+        </tbody>
+    </table>
+</div>

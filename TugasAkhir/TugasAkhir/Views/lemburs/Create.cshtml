@@ -1,0 +1,70 @@
+﻿@model TugasAkhir.Models.lembur
+
+@{
+    ViewBag.Title = "Add";
+    Layout = null;
+}
+
+@using (Html.BeginForm("Create", "lemburs", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "return ajaxaddlembur(this);", data_restUrl = Url.Action("Create", "lemburs", new { id = 0 }) }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="col-md-5">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.nik, "Nama", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.DropDownList("ddnama", null, htmlAttributes: new { @class = "form-control chosen-select", id = "ddnama" })
+                    </div>
+                </div>
+                <input type="text" id="textboxnik" name="nik" hidden="hidden" />
+
+                <div class="form-group">
+                    @Html.Label("NIK", new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.TextBox("nip", "", htmlAttributes: new { @class = "form-control", @required = "required", id = "textboxnip", @readonly = "readonly", @name = "nip" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.jam_mulai, "Jam Mulai", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.jam_mulai, new { htmlAttributes = new { @class = "form-control cs", @required = "required", type = "time" } })
+                        @Html.ValidationMessageFor(model => model.jam_mulai, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.jam_selesai, "Jam Selesai", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.jam_selesai, new { htmlAttributes = new { @class = "form-control cs", @required = "required", type = "time" } })
+                        @Html.ValidationMessageFor(model => model.jam_selesai, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Total Jam Lembur", new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.total_jam, new { htmlAttributes = new { @class = "form-control cs", id="hasil", type="time", @readonly="readonly" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.tanggal, "Tanggal", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.tanggal, new { htmlAttributes = new { @class = "form-control", type = "Date", @required = "required" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.reward, "Upah perjam", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.reward, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Submit</button>
+                        <button type="reset" class="btn btn-danger"><span class="fa fa-trash-alt"></span> Clear</button>
+                    </div>
+                </div>
+            </div>
+                </div>
+            </div>
+}

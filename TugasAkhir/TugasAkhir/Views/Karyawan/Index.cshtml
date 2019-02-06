@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "User";
+    Layout = "~/Views/Shared/_Layoutuser.cshtml";
+}
+<style>
+    .jumbotron {
+        background-image: url(../../_Asets/images/JB.jpg);
+        background-attachment: fixed; /* Supaya Backgroundnya diem nggak ikut ke scroll  */
+        background-size: cover;
+        background-position: 0 -30px;
+        height: 400px;
+        text-align: center;
+        position: relative;
+        color: #eaeaea;
+        overflow: hidden; /* Menyembunyikan Supaya Tidak Keluar  */
+    }
+
+        .jumbotron .container {
+            z-index: 1;
+            position: relative;
+        }
+
+        .jumbotron::after {
+            content: '';
+            display: block;
+            width: 120%;
+            height: 100%;
+            background-image: linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0));
+            position: absolute;
+            bottom: 0;
+            margin-left: -60px;
+        }
+
+        .jumbotron img {
+            width: 200px;
+            border: 5px solid #eaeaea;
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .jumbotron h1 {
+            text-shadow: 1px 1px 10px rgba(0, 0, 0, 1);
+            color: blue;
+        }
+
+    .pKiri, .pKanan {
+        opacity: 0;
+        transform: translate(-50px, 0) rotate(15deg);
+        transition: 1s;
+    }
+
+    .pKanan {
+        transform: translate(50px, 0) rotate(-15deg);
+    }
+
+    .pKiri.pMuncul, .pKanan.pMuncul {
+        opacity: 1;
+        transform: translate(0,0);
+    }
+</style>
+
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="text-center">
+                <img src="@ViewBag.Foto" class="img-circle pKanan" width="200px" height="200px" /><br />
+                <h1 class="pKiri"><font color="red">Selamat</font> Datang <font color="red"> @ViewBag.Nama </font>Diwebsite <font color="red"> ACE</font></h1>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<p class="text-center pKanan">
+    Alamat : Grha Adins Lantai 2 - 4, Jl. Panjang No.9C, RT.1/RW.11, Kb. Jeruk, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11530
+</p>
+
+@section scripts{
+    <script>
+    $(window).on('load', function () {
+        $('.pKiri').addClass('pMuncul');
+        $('.pKanan').addClass('pMuncul');
+    });
+    </script>
+}

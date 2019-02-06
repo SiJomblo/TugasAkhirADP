@@ -1,0 +1,140 @@
+﻿@model TugasAkhir.Models.surat
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = null;
+}
+
+<form id="surat" action="">
+    <div class="row">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="col-md-6">
+                @Html.HiddenFor(model => model.id_surat)
+                @if (Model.id_jenis == 1)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.detail_surat.nama_bank, "Nama Bank", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.detail_surat.nama_bank, new { htmlAttributes = new { @class = "form-control", @required = "required", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.detail_surat.nama_bank, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.detail_surat.keperluan, "Keperluan", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.detail_surat.keperluan, new { htmlAttributes = new { @class = "form-control", @required = "required", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.detail_surat.keperluan, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.keterangan, "Keterangan", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.keterangan, new { @class = "form-control", @rows = "3" })
+                            @Html.ValidationMessageFor(model => model.keterangan, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <a onclick="ProcessRekening()" class="btn btn-success"><span class="fa fa-save"></span> Submit</a>
+                }
+                else if (Model.id_jenis == 2)
+                {
+                    <div class="form-group">
+                        <div class="col-md-9">
+                            @Html.Label("Surat Keterangan Kerja")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.keterangan, "Keterangan", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.keterangan, new { @class = "form-control", @rows = "3" })
+                            @Html.ValidationMessageFor(model => model.keterangan, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <a onclick="ProcessKerja()" class="btn btn-success"><span class="fa fa-save"></span> Submit</a>
+                }
+                else if (Model.id_jenis == 3)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.detail_surat.lokasi, "Lokasi Kantor Pajak", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.detail_surat.lokasi, new { htmlAttributes = new { @class = "form-control", @required = "required", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.detail_surat.lokasi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.keterangan, "Keterangan", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.keterangan, new { @class = "form-control", @rows = "3" })
+                            @Html.ValidationMessageFor(model => model.keterangan, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <a onclick="ProcessNPWP()" class="btn btn-success"><span class="fa fa-save"></span> Submit</a>
+                }
+                else if (Model.id_jenis == 4)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.detail_surat.tujuan_instansi, "Tujuan Instansi", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.detail_surat.tujuan_instansi, new { htmlAttributes = new { @class = "form-control", @required = "required", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.detail_surat.tujuan_instansi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.detail_surat.kegiatan, "Kegiatan", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.detail_surat.kegiatan, new { htmlAttributes = new { @class = "form-control", @required = "required", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.detail_surat.kegiatan, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.keterangan, "Keterangan", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.keterangan, new { @class = "form-control", @rows = "3" })
+                            @Html.ValidationMessageFor(model => model.keterangan, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <a onclick="ProcessPemberitahuan()" class="btn btn-success"><span class="fa fa-save"></span> Submit</a>
+                }
+                else if (Model.id_jenis == 5)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.detail_surat.no_passport, "No Passport", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.detail_surat.no_passport, new { htmlAttributes = new { @class = "form-control", @required = "required", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.detail_surat.no_passport, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.detail_surat.tgl_pergi, "Tanggal pergi", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.detail_surat.tgl_pergi, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "date", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.detail_surat.tgl_pergi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.detail_surat.tgl_pulang, "Tanggal Pulang", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.detail_surat.tgl_pulang, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "date", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.detail_surat.tgl_pulang, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.detail_surat.tujuan, "Tujuan", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.detail_surat.tujuan, new { htmlAttributes = new { @class = "form-control", @required = "required", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.detail_surat.tujuan, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.keterangan, "Keterangan", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.TextAreaFor(model => model.keterangan, new { @class = "form-control", @rows = "3" })
+                            @Html.ValidationMessageFor(model => model.keterangan, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <a onclick="ProcessVisa()" class="btn btn-success"><span class="fa fa-save"></span> Submit</a>
+                }
+            </div>
+        </div>
+    </div>
+</form>

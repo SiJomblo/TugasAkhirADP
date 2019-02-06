@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layoutuser.cshtml";
+}
+<h3>Profile </h3>
+<a href="#" data-toggle="modal" data-target="#myModal" style="text-decoration-line:none;" class="btn btn-primary"><i class="fa fa-lock"></i> Change Password</a>
+<hr />
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#Profile">Profile</a></li>
+    <li><a data-toggle="tab" href="#Edit">Edit Profile</a></li>
+</ul>
+<div class="tab-content">
+    <div id="Profile" class="tab-pane fade in active">@Html.Action("Profiles", new { id = Session["nik"] })</div>
+    <div id="Edit" class="tab-pane fade in">@Html.Action("Edit", new { id = Session["nik"] })</div>
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- konten modal-->
+        <div class="modal-content">
+            <!-- heading modal -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h1 class="modal-title text-center" style="font-family:'Engravers MT'; font-size:xx-large;"><i class="fa fa-lock"></i> <b>Change Password</b></h1>
+            </div>
+            <!-- body modal -->
+            <form id="gantipass" action="" class="form-horizontal">
+                <div class="modal-body">
+                    @*<div class="form-group has-success has-feedback">
+                            <label class="control-label col-md-4" for="inputSuccess4">Input with success</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="inputSuccess4">
+                                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" hidden></span>
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        @Html.Label("Old Password", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            <input type="password" class="form-control" name="old" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("New Password", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            <input type="password" class="form-control" name="new" id="kontoru" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="confir">
+                        @Html.Label("Confirm New Password", new { @class = "control-label col-md-4" })
+                        <div class="col-md-6">
+                            <input type="password" class="form-control" name="confirmnew" id="kontoru1" onkeyup="CheckPass()" />
+                            <span class="glyphicon glyphicon-ok form-control-feedback" id="span1"></span>
+                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" id="span2"></span>
+                        </div>
+                    </div>
+                    @*<div class="form-group" id="s" style="display:none;">
+                            <label class="col-md-4"></label>
+                            <p id="status" />
+                        </div>*@
+                </div>
+                <div class="modal-footer">
+                    <a onclick="ChangePassword()" class="btn btn-success"><span class="fa fa-save"></span> Submit</a>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle"></i> Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src=" https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        function activatejQueryTable() {
+            $('#a').DataTable();
+        }
+        $(function () {
+            activatejQueryTable();
+        });
+
+        function ChangePassword() {           
+            let formdata = $("#gantipass").serialize();
+             var x = $("#kontoru").val();
+
+             if (x == "") {
+                 $.notify("Password Baru Tidak Boleh Kosong", "warn");
+                 return false;
+             }
+             if (x.length < 6) {
+                 $.notify("Password harus lebih dari 5", "warn");
+                 return false;
+             }
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("ChangePassword", "users")',
+                        data: formdata,
+                        success: function (response) {
+                            if (response.success) {
+                                $("#myModal").modal("hide");
+                                $("#profile").html(response.html);
+                                $('ul.nav.nav-tabs a:eq(0)').tab('show');
+                                $.notify(response.message, "success");
+                                if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                                    activatejQueryTable();
+                                }
+                            }
+                            else {
+                                $.notify(response.message, "error");
+                            }
+                        }
+                    });
+        }
+        $(document).ready(function () { hideall() });
+        function hideall() {
+            $("#spanemail1").hide();
+            $("#spanemail2").hide();
+        }
+
+        function CheckEmailEdit() {
+            email = $('#email').val();
+            $.ajax({
+                type: "POST",
+                url: "users/JsonGetEmailEdit",
+                data: { em: email },
+                success: function (result) {
+                    if (result != "NULL") {
+                        $("#confir2").attr("class", "form-group has-error has-feedback");
+                        $("#spanemail1").hide();
+                        $("#spanemail2").show();
+                    } else {
+                        $("#confir2").attr("class", "form-group has-success has-feedback");
+                        $("#spanemail1").show();
+                        $("#spanemail2").hide();
+                    }
+                },
+            });
+        };
+
+        function ajaxedit(form) {
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                var ajaxConfig = {
+                    type: 'POST',
+                    url: form.action,
+                    data: new FormData(form),
+                    success: function (response) {
+                        if (response.success) {
+                            $("#Profile").html(response.html);
+                            $('ul.nav.nav-tabs a:eq(0)').tab('show');
+                            hideall();
+                            $.notify(response.message, "success");
+                            if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                                activatejQueryTable();
+                            }
+                        }
+                        else {
+                            $.notify(response.message, "error");
+                        }
+                    }
+                }
+                if ($(form).attr('enctype') == "multipart/form-data") {
+                    ajaxConfig["contentType"] = false;
+                    ajaxConfig["processData"] = false;
+                }
+                $.ajax(ajaxConfig);
+            }
+            return false;
+        }
+
+        $("#span1").hide();
+        $("#span2").hide();
+        function CheckPass() {
+            if ($("#kontoru1").val() == $("#kontoru").val()) {
+                $("#confir").attr("class", "form-group has-success has-feedback");
+                $("#span1").show();
+                $("#span2").hide();
+            } else {
+                $("#confir").attr("class", "form-group has-error has-feedback");
+                $("#span1").hide();
+                $("#span2").show();
+            }
+        }
+    </script>
+}

@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<h3>Master User</h3>
+<hr />
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#list">View All</a></li>
+    <li><a data-toggle="tab" href="#AddorEdit">Add New</a></li>
+    <li id="tab1"><a data-toggle="tab" href="#Details">Detail</a></li>
+</ul>
+<div class="tab-content">
+    <div id="list" class="tab-pane fade in active">@Html.Action("ViewAll")</div>
+    <div id="AddorEdit" class="tab-pane fade in">@Html.Action("AddorEdit")</div>
+    <div id="Details" class="tab-pane fade in">@Html.Action("Details")</div>
+</div>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src=" https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        function activatejQueryTable() {
+            $('#a').DataTable();
+        }
+        $(function () {
+            activatejQueryTable();
+        });
+
+        $('#tab1').hide();
+
+        $(document).ready(function () { hideall() });
+        function hideall() {
+            $("#spanemail1").hide();
+            $("#spanemail2").hide();
+            $("#spannip1").hide();
+            $("#spannip2").hide();
+        }
+     
+       
+        function ResetPassword() {
+            let nip = $("#nip").val();
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: "Password User Ini Akan Direset ke default!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("ResetPassword", "users")',
+                        data: { id : nip },
+                        success: function (response) {
+                            if (response.success) {
+                                $.notify(response.message, "success");
+                                if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                                    activatejQueryTable();
+                                }
+                            }
+                            else {
+                                $.notify(response.message, "error");
+                            }
+                        }
+                    });
+                }                
+            });
+        }
+    </script>
+}

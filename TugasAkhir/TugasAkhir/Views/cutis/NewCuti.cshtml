@@ -1,0 +1,68 @@
+﻿@model TugasAkhir.Models.cuti
+
+@{
+    ViewBag.Title = "Add Cuti";
+    Layout = null;
+}
+
+@using (Html.BeginForm("NewCuti", "cutis", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "return ajaxaddcuti(this);" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="col-md-5">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.nik, "Nama", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.DropDownList("ddnama", null, htmlAttributes: new { @class = "form-control chosen-select", id = "ddnama" })
+                    </div>
+                </div>
+                <input type="text" id="textboxnik" name="nik" hidden="hidden" />
+
+                <div class="form-group">
+                    @Html.Label("NIK", new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.TextBox("nip", "", htmlAttributes: new { @class = "form-control", @required = "required", id = "textboxnip", @readonly = "readonly", @name = "nip" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.durasi_awal, "Durasi Awal", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.durasi_awal, new { htmlAttributes = new { @class = "form-control", type = "Date", @required = "required" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.durasi_akhir, "Durasi Akhir", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.durasi_akhir, new { htmlAttributes = new { @class = "form-control", type = "Date", @required = "required" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.alamat, "Alamat Cuti", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.TextAreaFor(model => model.alamat, new { @class = "form-control", @rows = "3", @required = "required" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.no_telp, "No Telp Saat Cuti", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.no_telp, new { htmlAttributes = new { @class = "form-control", type = "Number", @required = "required" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.keterangan, "Keterangan Cuti", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.keterangan, new { htmlAttributes = new { @class = "form-control", type = "text", @required = "required" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Submit</button>
+                        <button type="reset" class="btn btn-danger"><span class="fa fa-trash-alt"></span> Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

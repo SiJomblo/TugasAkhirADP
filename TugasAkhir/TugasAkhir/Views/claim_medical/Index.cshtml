@@ -1,0 +1,238 @@
+﻿@{
+    ViewBag.Title = "Index Claim";
+}
+<h3>Master Request Claim</h3>
+@if (Session["jabatan"].ToString() == "s")
+{
+    <a onclick="EditSaldo()" data-toggle="modal" style="text-decoration-line:none;" class="btn btn-primary"><i class="fa fa-money-bill-alt"></i> Ubah Saldo Awal</a>
+}
+<hr />
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#listrequest">List Request</a></li>
+    <li><a data-toggle="tab" href="#listreject">List Reject</a></li>
+    <li><a data-toggle="tab" href="#riwayatclaim">Riwayat Claim</a></li>
+    <li id="tab1"><a data-toggle="tab" href="#detailclaim">Detail Claim</a></li>
+    <li id="tab2"><a data-toggle="tab" href="#editclaim">Reject Claim</a></li>
+</ul>
+<div class="tab-content">
+    <div id="listrequest" class="tab-pane fade in active">@Html.Action("ListRequestClaim")</div>
+    <div id="listreject" class="tab-pane fade in">@Html.Action("RejectClaim")</div>
+    <div id="riwayatclaim" class="tab-pane fade in">@Html.Action("RiwayatClaim")</div>
+    <div id="detailclaim" class="tab-pane fade in">@Html.Action("Details")</div>
+    <div id="editclaim" class="tab-pane fade in">@Html.Action("EditClaim")</div>
+</div>
+
+<div id="Saldo" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- konten modal-->
+        <div class="modal-content">
+            <!-- heading modal -->
+            <div class="modal-header">               
+                <h1 class="modal-title text-center" style="font-family:'Engravers MT'; font-size:xx-large;"><b><i class="fa fa-money-bill-alt"></i> Ubah Saldo Medical</b></h1>
+            </div>
+            <!-- body modal -->
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src=" https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        function activatejQueryTable() {
+            $('#a').DataTable();
+            $('#b').DataTable();
+            $('#c').DataTable();
+        }
+        $(function () {
+            activatejQueryTable();
+        });
+
+        //Awal Hide Tab
+        $(document).ready(function () { hidetab() });
+
+        function hidetab() {
+            $('#tab1').hide();
+            $('#tab2').hide();
+        }
+        //Ahkir Hide Tab
+
+        function EditSaldo() {
+            $("#Saldo").modal("show");
+            $.ajax({
+                type: 'GET',
+                url: "claim_medical/PopUpSaldo",
+                success: function (response) {
+                    $("#Saldo .modal-body").html(response);
+                }
+            });
+        }
+
+        function DetailClaim(url) {
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (response) {
+                    $('#tab2').hide();
+                    $('#tab1').show();
+                    $("#detailclaim").html(response);
+                    $('ul.nav.nav-tabs a:eq(3)').tab('show');
+                }
+            });
+        }
+
+
+
+        function EditClaim(url) {
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (response) {
+                    $('#tab1').hide();
+                    $('#tab2').show();
+                    $("#editclaim").html(response);
+                    $('ul.nav.nav-tabs a:eq(4)').tab('show');
+                }
+            });
+        }
+
+        function GetRiwayatClaim() {
+            $.ajax({
+                type: "POST",
+                url: "claim_medical/JsonRiwayatClaim",
+                success: function (result) {
+                    $("#riwayatclaim").html(result.html);
+                    if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                        activatejQueryTable();
+                    }
+                },
+            });
+        }
+
+        function GetRejectClaim() {
+            $.ajax({
+                type: "POST",
+                url: "claim_medical/JsonRejectClaim",
+                success: function (result) {
+                    $("#listreject").html(result.html);
+                    if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                        activatejQueryTable();
+                    }
+                },
+            });
+        }
+
+        function ajaxeditclaim(form) {
+            var x = $("#keterangan").val();
+            if (x == "") {
+                $.notify("Keterangan tidak boleh kosong", "warn");
+                return false;
+            }
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                var ajaxConfig = {
+                    type: 'POST',
+                    url: form.action,
+                    data: new FormData(form),
+                    success: function (response) {
+                        if (response.success) {
+                            hidetab();
+                            GetRejectClaim();
+                            $("#listrequest").html(response.html);
+                            $('ul.nav.nav-tabs a:eq(0)').tab('show');
+                            $.notify(response.message, "success");
+                            if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                                activatejQueryTable();
+                            }
+                        }
+                        else {
+                            $.notify(response.message, "error");
+                        }
+                    }
+                }
+                if ($(form).attr('enctype') == "multipart/form-data") {
+                    ajaxConfig["contentType"] = false;
+                    ajaxConfig["processData"] = false;
+                }
+                $.ajax(ajaxConfig);
+            }
+            return false;
+        }
+
+        function ajaxsaldoawal(form) {           
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                var ajaxConfig = {
+                    type: 'POST',
+                    url: form.action,
+                    data: new FormData(form),
+                    success: function (response) {
+                        if (response.success) {
+                            hidetab();
+                            $("#Saldo").modal("hide");
+                            $("#listrequest").html(response.html);
+                            $('ul.nav.nav-tabs a:eq(0)').tab('show');
+                            $.notify(response.message, "success");
+                            if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                                activatejQueryTable();
+                            }
+                        }
+                        else {
+                            $.notify(response.message, "error");
+                        }
+                    }
+                }
+                if ($(form).attr('enctype') == "multipart/form-data") {
+                    ajaxConfig["contentType"] = false;
+                    ajaxConfig["processData"] = false;
+                }
+                $.ajax(ajaxConfig);
+            }
+            return false;
+        }
+
+
+
+        function AcceptClaim(url) {
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: "Claim medical akan disetujui",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        success: function (response) {
+                            if (response.success) {
+                                hidetab();
+                                GetRiwayatClaim();
+                                $("#listrequest").html(response.html);
+                                $('ul.nav.nav-tabs a:eq(0)').tab('show');
+                                $.notify(response.message, "success");
+                                if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                                    activatejQueryTable();
+                                }
+                            }
+                            else {
+                                $.notify(response.message, "error");
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}

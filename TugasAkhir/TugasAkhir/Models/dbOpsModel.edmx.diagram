@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="80826f7307144405a74b08bd0880ff72" Name="Diagram1">
+        <EntityTypeShape EntityType="db_OpsModel.claim_medical" Width="1.5" PointX="5.25" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OpsModel.cuti" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OpsModel.cuti_massal" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OpsModel.cuti_user" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OpsModel.detail_surat" Width="1.5" PointX="8.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OpsModel.jenis_surat" Width="1.5" PointX="3.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OpsModel.lembur" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OpsModel.saldo_awal" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OpsModel.saldo_medical" Width="1.5" PointX="3" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OpsModel.slipgaji" Width="1.5" PointX="3" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OpsModel.surat" Width="1.5" PointX="6" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OpsModel.user" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+        <AssociationConnector Association="db_OpsModel.FK_claim_medical_saldo_medical" ManuallyRouted="false" />
+        <AssociationConnector Association="db_OpsModel.FK_cuti_user" ManuallyRouted="false" />
+        <AssociationConnector Association="db_OpsModel.FK_cuti_user_user" ManuallyRouted="false" />
+        <AssociationConnector Association="db_OpsModel.FK_detail_surat_surat" ManuallyRouted="false" />
+        <AssociationConnector Association="db_OpsModel.FK_surat_jenis_surat" ManuallyRouted="false" />
+        <AssociationConnector Association="db_OpsModel.FK_lembur_user" ManuallyRouted="false" />
+        <AssociationConnector Association="db_OpsModel.FK_saldo_medical_user" ManuallyRouted="false" />
+        <AssociationConnector Association="db_OpsModel.FK_slipgaji_user" ManuallyRouted="false" />
+        <AssociationConnector Association="db_OpsModel.FK_surat_user" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

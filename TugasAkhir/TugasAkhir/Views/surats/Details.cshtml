@@ -1,0 +1,90 @@
+﻿@model TugasAkhir.Models.surat
+
+@{
+    ViewBag.Title = "Details";
+    Layout = null;
+}
+
+<div>
+    <hr />
+    <div class="col-md-5">
+        <table class="table table-striped">
+            <tr>
+                <th>Jenis Surat</th>
+                <td> @Html.DisplayFor(model => model.jenis_surat.jenis_surat1)</td>
+            </tr>
+            <tr>
+                <th> Tanggal </th>
+                <td> @String.Format("{0:dd MMMM yyyy}", Model.tanggal)</td>
+            </tr>
+            @if (Model.id_jenis == 1)
+            {
+                <tr>
+                    <th> Nama Bank</th>
+                    <td> @Html.DisplayFor(model => model.detail_surat.nama_bank)</td>
+                </tr>
+                <tr>
+                    <th> Keperluan</th>
+                    <td> @Html.DisplayFor(model => model.detail_surat.keperluan)</td>
+                </tr>
+            }
+            else if (Model.id_jenis == 3)
+            {
+                <tr>
+                    <th> Lokasi Kantor Pajak</th>
+                    <td> @Html.DisplayFor(model => model.detail_surat.lokasi)</td>
+                </tr>
+            }
+            else if (Model.id_jenis == 4)
+            {
+                <tr>
+                    <th> Tujuan Instansi</th>
+                    <td> @Html.DisplayFor(model => model.detail_surat.tujuan_instansi)</td>
+                </tr>
+                <tr>
+                    <th> Kegiatan</th>
+                    <td> @Html.DisplayFor(model => model.detail_surat.kegiatan)</td>
+                </tr>
+            }
+            else if (Model.id_jenis == 5)
+            {
+                <tr>
+                    <th> No Passport</th>
+                    <td> @Html.DisplayFor(model => model.detail_surat.no_passport)</td>
+                </tr>
+                <tr>
+                    <th> Tanggal Pergi</th>
+                    <td> @String.Format("{0:dd MMMM yyyy}", Model.detail_surat.tgl_pergi)</td>
+                </tr>
+                <tr>
+                    <th> Tanggal Pulang</th>
+                    <td> @String.Format("{0:dd MMMM yyyy}", Model.detail_surat.tgl_pulang)</td>
+                </tr>
+                <tr>
+                    <th> Tujuan</th>
+                    <td> @Html.DisplayFor(model => model.detail_surat.tujuan)</td>
+                </tr>
+            }
+            <tr>
+                <th> Status</th>
+                <td>
+                    @if (Model.status == "Request")
+                    {
+                        <span class="label label-info">@Html.DisplayFor(modelItem => Model.status)</span>
+                    }
+                    else if (Model.status == "Process")
+                    {
+                        <span class="label label-warning">@Html.DisplayFor(modelItem => Model.status)</span>
+                    }
+                    else
+                    {
+                        <span class="label label-success">@Html.DisplayFor(modelItem => Model.status)</span>
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+

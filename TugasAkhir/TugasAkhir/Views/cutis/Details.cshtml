@@ -1,0 +1,52 @@
+﻿@model TugasAkhir.Models.cuti
+
+@{
+    ViewBag.Title = "Detail Cuti";
+    Layout = null;
+}
+
+<div>
+    <hr />
+    <div class="col-md-6">
+        <table class="table table-striped">
+            <tr>
+                <th>NIK</th>
+                <td> @Html.DisplayFor(model => model.user.nip)</td>
+            </tr>
+            <tr>
+                <th>Nama</th>
+                <td> @Html.DisplayFor(model => model.user.nama)</td>
+            </tr>
+            <tr>
+                <th>E-Mail</th>
+                <td> @Html.DisplayFor(model => model.user.email)</td>
+            </tr>
+            <tr>
+                <th> Tanggal Awal</th>
+                <td> @String.Format("{0:dd MMMM yyyy}", Model.durasi_awal)</td>
+            </tr>
+            <tr>
+                <th> Tanggal Akhir</th>
+                <td> @String.Format("{0:dd MMMM yyyy}", Model.durasi_akhir)</td>
+            </tr>
+            <tr>
+                <th>Alamat</th>
+                <td> @Html.DisplayFor(model => model.alamat)</td>
+            <tr>
+                <th>No.Telp</th>
+                <td> @Html.DisplayFor(model => model.no_telp)</td>
+            </tr>
+            <tr>
+                <th>Jatah Cuti</th>
+                <td> @Html.DisplayFor(model => model.user.cuti_user.jatah_cuti)</td>
+            </tr>
+            <tr>
+                <th>Sisa Cuti</th>
+                <td> @Html.DisplayFor(model => model.user.cuti_user.sisa_cuti)</td>
+            </tr>
+        </table>
+    </div> 
+</div>
+
+
+

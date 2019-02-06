@@ -1,0 +1,272 @@
+﻿@{
+    ViewBag.Title = "Admin";
+}
+<hr style="margin-top:0;">
+<div class="row">
+
+    <div class="text-center">
+        <img src="@ViewBag.Foto" class="img-circle" style="border:1px;width:100px;border: 5px solid #eaeaea;box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);" /><br />
+        <h2>Selamat Datang Admin @ViewBag.Nama</h2>
+    </div>
+
+</div>
+
+<div class="row">
+    <hr />
+    <div class="col-md-4">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-money-bill-alt fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">
+                            @if (Convert.ToUInt32(ViewData["NSlipGaji"]) == 0)
+                            {
+                                <h1 style="margin-top:0;"><b>0</b></h1>
+                            }
+                            else
+                            {
+                                <h1 style="margin-top:0; color:red;"><b>@ViewData["NSlipGaji"] </b></h1>
+                            }
+                        </div>
+                        <div><h4><b>Slip Gaji</b></h4></div>
+                    </div>
+                </div>
+            </div>
+            <a href="@Url.Action("Index","slipgajis")">
+                <div class="panel-footer">
+                    <span class="pull-left"><font color="#3c763d">View Details</font></span>
+                    <span class="pull-right"><font color="#3c763d"><i class="fa fa-arrow-circle-right"></i></font></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-chalkboard-teacher fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">
+                            @if (Convert.ToUInt32(ViewData["NVisa"]) == 0)
+                            {
+                                <h1 style="margin-top:0;"><b>0</b></h1>
+                            }
+                            else
+                            {
+                                <h1 style="margin-top:0; color:red;"><b>@ViewData["NVisa"] </b></h1>
+                            }
+                        </div>
+                        <div><h4><b>Visa</b></h4></div>
+                    </div>
+                </div>
+            </div>
+            <a href="@Url.Action("IndexVisa","surats")">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-ambulance fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">
+                            @if (Convert.ToUInt32(ViewData["NClaim"]) == 0)
+                            {
+                                <h1 style="margin-top:0;"><b>0</b></h1>
+                            }
+                            else
+                            {
+                                <h1 style="margin-top:0; color:red;"><b>@ViewData["NClaim"] </b></h1>
+                            }
+                        </div>
+                        <div><h4><b>Claim Medical</b></h4></div>
+                    </div>
+                </div>
+            </div>
+            <a href="@Url.Action("Index","claim_medical")">
+                <div class="panel-footer">
+                    <span class="pull-left"><font color="#a94442">View Details</font></span>
+                    <span class="pull-right"><font color="#a94442"><i class="fa fa-arrow-circle-right"></i></font></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>  
+@*//Notifikasi Surat*@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+
+                    <a style="text-decoration-line:none;" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <span class="fa fa-bullhorn"></span>
+                        <font color="red">
+                            @if (Convert.ToUInt32(ViewData["NTotal"]) == 0)
+                            {
+                                <b>0</b>
+                            }
+                            else
+                            {
+                                <b color: red;>@ViewData["NTotal"]</b>
+                            }
+                        </font> Notifikasi Surat
+                    </a>
+
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+
+                    <div class="row" style="margin-top:10px;">
+                        <div class="col-md-3">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-book-open fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge">
+                                                @if (Convert.ToUInt32(ViewData["NRekening"]) == 0)
+                                                {
+                                                    <h1 style="margin-top:0;"><b>0</b></h1>
+                                                }
+                                                else
+                                                {
+                                                    <h1 style="margin-top:0; color:red;"><b>@ViewData["NRekening"] </b></h1>
+                                                }
+                                            </div>
+                                            <div><h4><b>Buka Rekening</b></h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="@Url.Action("IndexRekening","surats")">
+                                    <div class="panel-footer">
+                                        <span class="pull-left"><font color="#00BFFF">View Details</font></span>
+                                        <span class="pull-right"><font color="#00BFFF"><i class="fa fa-arrow-circle-right"></i></font></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="panel panel-warning">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-file-code fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge">
+                                                @if (Convert.ToUInt32(ViewData["NNPWP"]) == 0)
+                                                {
+                                                    <h1 style="margin-top:0;"><b>0</b></h1>
+                                                }
+                                                else
+                                                {
+                                                    <h1 style="margin-top:0; color:red;"><b>@ViewData["NNPWP"] </b></h1>
+                                                }
+                                            </div>
+                                            <div><h4><b>NPWP</b></h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="@Url.Action("IndexNPWP","surats")">
+                                    <div class="panel-footer">
+                                        <span class="pull-left"><font color="#8a6d3b">View Details</font></span>
+                                        <span class="pull-right"><font color="#8a6d3b"><i class="fa fa-arrow-circle-right"></i></font></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="panel panel-danger">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-child fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge">
+                                                @if (Convert.ToUInt32(ViewData["NKerja"]) == 0)
+                                                {
+                                                    <h1 style="margin-top:0;"><b>0</b></h1>
+                                                }
+                                                else
+                                                {
+                                                    <h1 style="margin-top:0; color:red;"><b>@ViewData["NKerja"] </b></h1>
+                                                }
+                                            </div>
+                                            <div><h4><b>Keterangan Kerja</b></h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="@Url.Action("IndexKerja","surats")">
+                                    <div class="panel-footer">
+                                        <span class="pull-left"><font color="#a94442">View Details</font></span>
+                                        <span class="pull-right"><font color="#a94442"><i class="fa fa-arrow-circle-right"></i></font></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="panel panel-success">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="fa fa-grin-alt fa-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge">
+                                                @if (Convert.ToUInt32(ViewData["NPemberitahuan"]) == 0)
+                                                {
+                                                    <h1 style="margin-top:0;"><b>0</b></h1>
+                                                }
+                                                else
+                                                {
+                                                    <h1 style="margin-top:0; color:red;"><b>@ViewData["NPemberitahuan"] </b></h1>
+                                                }
+                                            </div>
+                                            <div><h4><b>Pemberitahuan</b></h4></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="@Url.Action("IndexPemberitahuan","surats")">
+                                    <div class="panel-footer">
+                                        <span class="pull-left"><font color="#3c763d">View Details</font></span>
+                                        <span class="pull-right"><font color="#3c763d"><i class="fa fa-arrow-circle-right"></i></font></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>                   
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

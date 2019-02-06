@@ -1,0 +1,69 @@
+﻿@model IEnumerable<TugasAkhir.Models.surat>
+
+@{
+    ViewBag.Title = "Riwayat Pemberitahuan";
+    Layout = null;
+}
+<div class="table table-responsive" style="padding-top:5px !important;">
+    <table class="table table-striped table-condensed hover" id="b">
+        <thead>
+            <tr>
+                <th>
+                    NIK
+                </th>
+                <th>
+                    NAME
+                </th>
+                <th>
+                    DATE
+                </th>
+                <th>
+                    INSTITUTION OBJECTIVES
+                </th>
+                <th>
+                    ACTIVITIES
+                </th>
+                <th>
+                    ANNOTATION
+                </th>
+                <th>
+                    BY
+                </th>
+                <th>
+                    STATUS
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user.nip)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user.nama)
+                </td>
+                <td>
+                    @String.Format("{0:dd MMMM yyyy}", item.tanggal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.detail_surat.tujuan_instansi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.detail_surat.kegiatan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.keterangan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.oleh)
+                </td>
+                <td>
+                    <span class="label label-success">@Html.DisplayFor(modelItem => item.status)</span>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

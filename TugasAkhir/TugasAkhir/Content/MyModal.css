@@ -1,0 +1,18 @@
+﻿.modal-content{
+    border-radius:20px !important;   
+}
+.modal-header {
+    background-color: #337ab7;
+    border-radius: 20px 20px 0px 0px;
+}
+.modal-header h1 {
+    font-family: 'Engravers MT';
+    font-size: xx-large;
+    text-shadow: 0px 5px 5px #000000;
+    font-weight:100 !important;
+    text-anchor:end;
+    color: white;
+}
+.modal-footer {
+    border-radius: 0px 0px 20px 20px;
+}

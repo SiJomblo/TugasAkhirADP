@@ -1,0 +1,195 @@
+﻿@{
+    ViewBag.Title = "Index Claim";
+}
+<h3>Master Cuti</h3>
+<a href="#" data-toggle="modal" data-target="#myModal" style="text-decoration-line:none;" class="btn btn-primary"><i class="fa fa-plane"></i> Cuti Massal</a>
+<hr />
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#riwayatcuti">Riwayat Cuti</a></li>
+    <li><a data-toggle="tab" href="#cutimassal">Riwayat Cuti Massal</a></li>
+    <li><a data-toggle="tab" href="#newcuti">New Cuti</a></li>
+    <li id="tab1"><a data-toggle="tab" href="#detailcuti">Detail Cuti</a></li>
+</ul>
+<div class="tab-content">
+    <div id="riwayatcuti" class="tab-pane fade in active">@Html.Action("RiwayatCuti")</div>
+    <div id="cutimassal" class="tab-pane fade in">@Html.Action("CutiMassal")</div>
+    <div id="newcuti" class="tab-pane fade in">@Html.Action("NewCuti")</div>
+    <div id="detailcuti" class="tab-pane fade in">@Html.Action("Details")</div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- konten modal-->
+        <div class="modal-content">
+            <!-- heading modal -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h1 class="modal-title text-center" style="font-family:'Engravers MT'; font-size:xx-large;"><i class="fa fa-plane"></i> <b>Cuti Massal</b></h1>
+            </div>
+            <!-- body modal -->
+            @using (Html.BeginForm("CutiMassal", "cutis", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "return ajaxcutimassal(this);", @class = "form-horizontal" }))
+            {
+            <div class="modal-body">
+
+                <div class="form-group">
+                    @Html.Label("Jumlah Cuti", new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        <input type="number" class="form-control" name="jumlah" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Tanggal", new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        <input type="date" class="form-control" name="tanggal" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Keterangan", new { @class = "control-label col-md-3" })
+                    <div class="col-md-7">
+                        <input type="text" class="form-control" name="keterangan" required />
+                    </div>
+                </div>
+            </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Submit</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-window-close"></i> Close</button>
+                </div>
+            }
+            </div>
+    </div>
+</div>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+@*<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet" />*@
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    @*<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>*@
+
+
+    <script>
+
+        function activatejQueryTable() {
+            //$('#a').DataTable({
+            //    dom: 'Bfrtip',
+            //    buttons: [
+            //        'excel'
+            //    ]
+            //});
+            $('#a').DataTable();
+            $('#b').DataTable();
+        }
+        $(function () {
+            activatejQueryTable();
+        });
+
+        $('#ddnama').change(function () {
+            nik = $('#ddnama').val();
+            $.ajax({
+                type: "POST",
+                url: "cutis/JsonGetNIP",
+                data: { id: nik },
+                success: function (result) {
+                    $('#textboxnip').val(result);
+                },
+            });
+        });
+
+        $('#ddnama').change(function () {
+            $('#textboxnik').val($('#ddnama').val());
+        });
+
+
+        $('document').ready(function () {
+            $("#ddnama").chosen();
+        })
+
+        $('#tab1').hide();
+        
+        function DetailCuti(url) {
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (response) {
+                    $('#tab1').show();
+                    $("#detailcuti").html(response);
+                    $('ul.nav.nav-tabs a:eq(3)').tab('show');
+                }
+            });
+        }
+
+
+        function ajaxaddcuti(form) {
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                var ajaxConfig = {
+                    type: 'POST',
+                    url: form.action,
+                    data: new FormData(form),
+                    success: function (response) {
+                        if (response.success) {
+                            $('#tab1').hide();
+                            $("#riwayatcuti").html(response.html);
+                            $('ul.nav.nav-tabs a:eq(0)').tab('show');
+                            $.notify(response.message, "success");
+                            if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                                activatejQueryTable();
+                            }
+                        }
+                        else {
+                            $.notify(response.message, "error");
+                        }
+                    }
+                }
+                if ($(form).attr('enctype') == "multipart/form-data") {
+                    ajaxConfig["contentType"] = false;
+                    ajaxConfig["processData"] = false;
+                }
+                $.ajax(ajaxConfig);
+            }
+            return false;
+        }
+
+        function ajaxcutimassal(form) {         
+                $.validator.unobtrusive.parse(form);
+                if ($(form).valid()) {
+                    var ajaxConfig = {
+                        type: 'POST',
+                        url: form.action,
+                        data: new FormData(form),
+                        success: function (response) {
+                            if (response.success) {
+                                $('#tab1').hide();
+                                $('#myModal').modal('hide');
+                                $("#cutimassal").html(response.html);
+                                $('ul.nav.nav-tabs a:eq(1)').tab('show');
+                                $.notify(response.message, "success");
+                                if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                                    activatejQueryTable();
+                                }
+                            }
+                            else {
+                                $.notify(response.message, "error");
+                            }
+                        }
+                    }
+                    if ($(form).attr('enctype') == "multipart/form-data") {
+                        ajaxConfig["contentType"] = false;
+                        ajaxConfig["processData"] = false;
+                    }
+                    $.ajax(ajaxConfig);
+                }
+                return false;
+            }
+     
+
+    </script>
+}

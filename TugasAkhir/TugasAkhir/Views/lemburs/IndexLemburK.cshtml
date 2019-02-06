@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layoutuser.cshtml";
+}
+<h3>Halaman Lembur</h3>
+<hr />
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#listlemburk">Daftar Lembur</a></li>
+    <li><a data-toggle="tab" href="#riwayatlemburk">Riwayat Lembur</a></li>
+</ul>
+<div class="tab-content">
+    <div id="listlemburk" class="tab-pane fade in active">@Html.Action("ListLemburK")</div>
+    <div id="riwayatlemburk" class="tab-pane fade in">@Html.Action("RiwayatLemburK")</div>
+</div>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src=" https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        function activatejQueryTable() {
+            $('#a').DataTable();
+            $('#b').DataTable();
+        }
+        $(function () {
+            activatejQueryTable();
+        });
+
+    </script>
+}

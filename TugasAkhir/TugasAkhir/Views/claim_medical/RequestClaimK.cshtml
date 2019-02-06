@@ -1,0 +1,108 @@
+﻿@model TugasAkhir.Models.claim_medical
+
+@{
+    ViewBag.Title = "Add New";
+    Layout = null;
+}
+
+
+@using (Html.BeginForm("RequestClaimK", "claim_medical", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "return ajaxrequestclaim(this);", data_restUrl = Url.Action("RequestClaimK", "claim_medical", new { id = 0 }) }))
+{
+    <div class="row">
+        <div class="form-horizontal">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.tanggal, "Tanggal", new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBox("Tanggal", String.Format("{0:dd MMMM yyyy}", DateTime.Now), htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group"> 
+                    @Html.LabelFor(model => model.tipe_perawatan, "Tipe Perawatan", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.tipe_perawatan, new List<SelectListItem>
+                        {
+                        new SelectListItem() {Text = "Rawat Jalan", Value="Rawat Jalan"},
+                        new SelectListItem() {Text = "Rawat Inap", Value="Rawat Inap"},
+                        new SelectListItem() {Text = "Kacamata", Value="Kacamata"}
+                        }, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.tanggal_perawatan, "Tanggal Perawatan", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.tanggal_perawatan, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "date" } })
+                        @Html.ValidationMessageFor(model => model.tanggal_perawatan, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.nama_pasien, "Nama Pasien", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.nama_pasien, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.nama_pasien, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.hubungan, "Hubungan", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.hubungan, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.hubungan, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.nama_dokter, "Nama Dokter", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.nama_dokter, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.nama_dokter, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.diagnosa, "Diagnosa", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.diagnosa, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.diagnosa, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.no_telp, "No. Telpon RS", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.no_telp, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number" } })
+                        @Html.ValidationMessageFor(model => model.no_telp, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.lokasi_RS, "Lokasi RS", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextAreaFor(model => model.lokasi_RS, new { @class = "form-control", @rows = "4", @required = "required"})
+                        @Html.ValidationMessageFor(model => model.lokasi_RS, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.total_tagihan, "Total Tagihan", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.total_tagihan, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number" } })
+                        @Html.ValidationMessageFor(model => model.total_tagihan, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.file_kwintasi, "Bukti Kwitansi", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        <input type="file" name="filekwintasi" accept="image/jpeg, image/png, .doc, .docx, .pdf" required />
+                    </div>
+                </div>
+            </div>
+            <hr style="border:2px double #eaeaea;" />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-5">
+                    <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Submit</button>
+                    <button type="reset" class="btn btn-danger"><span class="fa fa-trash-alt"></span> Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

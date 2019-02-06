@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<h3>Master Slip Gaji</h3>
+<hr />
+<ul class="nav nav-tabs">
+    <li class="active" id="requestt"><a data-toggle="tab" href="#request">Request</a></li>  
+    <li id="processs"><a data-toggle="tab" href="#process">Process</a></li>
+    <li id="riwayatt"><a data-toggle="tab" href="#riwayat">Riwayat</a></li>
+</ul>
+<div class="tab-content">
+    <div id="request" class="tab-pane fade in active">@Html.Action("RequestGaji")</div>
+    <div id="process" class="tab-pane fade in">@Html.Action("Process")</div>
+    <div id="riwayat" class="tab-pane fade in">@Html.Action("Riwayat")</div>
+</div>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src=" https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        function activatejQueryTable() {
+            $('#a').DataTable();
+            $('#b').DataTable();
+            $('#c').DataTable();
+        }
+        $(function () {
+            activatejQueryTable();
+        });
+
+        function GetProcessGaji() {
+            $.ajax({
+                type: "POST",
+                url: "slipgajis/JsonProcessGaji",
+                success: function (result) {
+                    $("#process").html(result.html);
+                    if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                        activatejQueryTable();
+                    }
+                },
+            });
+        }
+
+        function GetRiwayatGaji() {
+            $.ajax({
+                type: "POST",
+                url: "slipgajis/JsonRiwayatGaji",
+                success: function (result) {
+                    $("#riwayat").html(result.html);
+                    if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                        activatejQueryTable();
+                    }
+                },
+            });
+        }
+
+        function EditStatus(url) {
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: "Request akan dilanjutkan ke proses!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        success: function (response) {
+                            if (response.success) {
+                                GetProcessGaji();
+                                $("#request").html(response.html);
+                                $.notify(response.message, "success");
+                                if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                                    activatejQueryTable();
+                                }                           
+                            }
+                            else {
+                                $.notify(response.message, "error");
+                            }
+                        }
+                    });
+                }
+            });
+        }      
+
+        function EditStatusProcess(url) {
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: "Process akan diubah Ke finish!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        success: function (response) {
+                            if (response.success) {
+                                GetRiwayatGaji();
+                                $("#process").html(response.html);
+                                $.notify(response.message, "success");
+                                if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
+                                    activatejQueryTable();
+                                }                    
+                            }
+                            else {
+                                $.notify(response.message, "error");
+                            }
+                        }
+                    });
+                }
+            });
+        } 
+
+       
+      
+    </script>
+
+}

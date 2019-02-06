@@ -1,0 +1,933 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="db_OpsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="claim_medical">
+          <Key>
+            <PropertyRef Name="id_claim" />
+          </Key>
+          <Property Name="id_claim" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nama_pasien" Type="varchar(max)" />
+          <Property Name="hubungan" Type="varchar(max)" />
+          <Property Name="tipe_perawatan" Type="varchar(max)" />
+          <Property Name="tanggal_perawatan" Type="date" />
+          <Property Name="nama_dokter" Type="varchar(max)" />
+          <Property Name="lokasi_RS" Type="text" />
+          <Property Name="no_telp" Type="varchar(max)" />
+          <Property Name="diagnosa" Type="varchar(max)" Nullable="false" />
+          <Property Name="status" Type="varchar(max)" />
+          <Property Name="total_tagihan" Type="int" Nullable="false" />
+          <Property Name="nik" Type="int" Nullable="false" />
+          <Property Name="total_claim" Type="int" Nullable="false" />
+          <Property Name="file_kwintasi" Type="varchar" MaxLength="255" />
+          <Property Name="tanggal" Type="date" Nullable="false" />
+          <Property Name="keterangan" Type="text" />
+          <Property Name="oleh" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="cuti">
+          <Key>
+            <PropertyRef Name="id_cuti" />
+          </Key>
+          <Property Name="id_cuti" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nik" Type="int" Nullable="false" />
+          <Property Name="tanggal" Type="date" Nullable="false" />
+          <Property Name="durasi_awal" Type="date" Nullable="false" />
+          <Property Name="durasi_akhir" Type="date" Nullable="false" />
+          <Property Name="alamat" Type="varchar(max)" />
+          <Property Name="no_telp" Type="varchar(max)" />
+          <Property Name="keterangan" Type="nvarchar(max)" />
+          <Property Name="oleh" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="cuti_massal">
+          <Key>
+            <PropertyRef Name="id_massal" />
+          </Key>
+          <Property Name="id_massal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tanggal" Type="date" Nullable="false" />
+          <Property Name="keterangan" Type="varchar(max)" />
+          <Property Name="oleh" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="cuti_user">
+          <Key>
+            <PropertyRef Name="nik" />
+          </Key>
+          <Property Name="nik" Type="int" Nullable="false" />
+          <Property Name="jatah_cuti" Type="int" Nullable="false" />
+          <Property Name="sisa_cuti" Type="int" Nullable="false" />
+          <Property Name="valid_jatah" Type="date" Nullable="false" />
+          <Property Name="valid_sisa" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="detail_surat">
+          <Key>
+            <PropertyRef Name="id_surat" />
+          </Key>
+          <Property Name="id_surat" Type="int" Nullable="false" />
+          <Property Name="nama_bank" Type="varchar(max)" />
+          <Property Name="keperluan" Type="varchar(max)" />
+          <Property Name="no_passport" Type="varchar(max)" />
+          <Property Name="tgl_pergi" Type="date" />
+          <Property Name="tgl_pulang" Type="date" />
+          <Property Name="tujuan" Type="varchar(max)" />
+          <Property Name="tujuan_instansi" Type="varchar(max)" />
+          <Property Name="kegiatan" Type="varchar(max)" />
+          <Property Name="lokasi" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="jenis_surat">
+          <Key>
+            <PropertyRef Name="id_jenis" />
+          </Key>
+          <Property Name="id_jenis" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="jenis_surat" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="lembur">
+          <Key>
+            <PropertyRef Name="id_lembur" />
+          </Key>
+          <Property Name="id_lembur" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nik" Type="int" Nullable="false" />
+          <Property Name="jam_mulai" Type="time" Precision="7" Nullable="false" />
+          <Property Name="jam_selesai" Type="time" Precision="7" Nullable="false" />
+          <Property Name="total_jam" Type="time" Precision="7" />
+          <Property Name="tanggal" Type="date" />
+          <Property Name="reward" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="totalreward" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="status" Type="varchar(max)" />
+          <Property Name="oleh" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="saldo_awal">
+          <Key>
+            <PropertyRef Name="id_saldo" />
+          </Key>
+          <Property Name="id_saldo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="default_inap" Type="int" Nullable="false" />
+          <Property Name="default_jalan" Type="int" Nullable="false" />
+          <Property Name="default_kacamata" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="saldo_medical">
+          <Key>
+            <PropertyRef Name="nik" />
+          </Key>
+          <Property Name="nik" Type="int" Nullable="false" />
+          <Property Name="saldo_rawatinap" Type="int" Nullable="false" />
+          <Property Name="saldo_rawatjalan" Type="int" Nullable="false" />
+          <Property Name="saldo_kacamata" Type="int" Nullable="false" />
+          <Property Name="valid_rawat" Type="date" Nullable="false" />
+          <Property Name="valid_kacamata" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="slipgaji">
+          <Key>
+            <PropertyRef Name="id_slip" />
+          </Key>
+          <Property Name="id_slip" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tanggal" Type="date" />
+          <Property Name="nik" Type="int" Nullable="false" />
+          <Property Name="durasi_awal" Type="date" />
+          <Property Name="durasi_akhir" Type="date" />
+          <Property Name="status" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="surat">
+          <Key>
+            <PropertyRef Name="id_surat" />
+          </Key>
+          <Property Name="id_surat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_jenis" Type="int" Nullable="false" />
+          <Property Name="nik" Type="int" />
+          <Property Name="tanggal" Type="date" />
+          <Property Name="status" Type="varchar(max)" />
+          <Property Name="keterangan" Type="varchar(max)" />
+          <Property Name="oleh" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="nik" />
+          </Key>
+          <Property Name="nik" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nama" Type="varchar(max)" />
+          <Property Name="email" Type="varchar(max)" Nullable="false" />
+          <Property Name="password" Type="varchar(max)" Nullable="false" />
+          <Property Name="tempat_lahir" Type="varchar(max)" />
+          <Property Name="tanggal_lahir" Type="date" />
+          <Property Name="jenis_kelamin" Type="char" MaxLength="1" />
+          <Property Name="no_hp" Type="varchar(max)" />
+          <Property Name="alamat_domisili" Type="varchar(max)" />
+          <Property Name="no_ktp" Type="varchar(max)" />
+          <Property Name="alamat_ktp" Type="varchar(max)" />
+          <Property Name="pendidikan_akhir" Type="varchar(max)" />
+          <Property Name="jurusan" Type="varchar(max)" />
+          <Property Name="agama" Type="varchar(max)" />
+          <Property Name="npwp" Type="varchar(max)" />
+          <Property Name="status_pajak" Type="varchar(max)" />
+          <Property Name="bpjs" Type="varchar(max)" />
+          <Property Name="join_date" Type="date" Nullable="false" />
+          <Property Name="no_rekening" Type="varchar(max)" />
+          <Property Name="jabatan" Type="char" MaxLength="1" />
+          <Property Name="penempatan" Type="varchar(max)" />
+          <Property Name="posisi" Type="varchar(max)" />
+          <Property Name="status_kerja" Type="varchar(max)" />
+          <Property Name="file_ktp" Type="nvarchar(max)" />
+          <Property Name="file_npwp" Type="nvarchar(max)" />
+          <Property Name="file_ijasah" Type="nvarchar(max)" />
+          <Property Name="file_rekening" Type="nvarchar(max)" />
+          <Property Name="foto_profil" Type="varchar(max)" />
+          <Property Name="nip" Type="varchar(max)" />
+          <Property Name="oleh" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="FK_claim_medical_saldo_medical">
+          <End Role="saldo_medical" Type="Self.saldo_medical" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="claim_medical" Type="Self.claim_medical" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="saldo_medical">
+              <PropertyRef Name="nik" />
+            </Principal>
+            <Dependent Role="claim_medical">
+              <PropertyRef Name="nik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cuti_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="cuti" Type="Self.cuti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="nik" />
+            </Principal>
+            <Dependent Role="cuti">
+              <PropertyRef Name="nik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cuti_user_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="cuti_user" Type="Self.cuti_user" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="nik" />
+            </Principal>
+            <Dependent Role="cuti_user">
+              <PropertyRef Name="nik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_surat_surat">
+          <End Role="surat" Type="Self.surat" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="detail_surat" Type="Self.detail_surat" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="surat">
+              <PropertyRef Name="id_surat" />
+            </Principal>
+            <Dependent Role="detail_surat">
+              <PropertyRef Name="id_surat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_lembur_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="lembur" Type="Self.lembur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="nik" />
+            </Principal>
+            <Dependent Role="lembur">
+              <PropertyRef Name="nik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_saldo_medical_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="saldo_medical" Type="Self.saldo_medical" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="nik" />
+            </Principal>
+            <Dependent Role="saldo_medical">
+              <PropertyRef Name="nik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_slipgaji_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="slipgaji" Type="Self.slipgaji" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="nik" />
+            </Principal>
+            <Dependent Role="slipgaji">
+              <PropertyRef Name="nik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_surat_jenis_surat">
+          <End Role="jenis_surat" Type="Self.jenis_surat" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="surat" Type="Self.surat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="jenis_surat">
+              <PropertyRef Name="id_jenis" />
+            </Principal>
+            <Dependent Role="surat">
+              <PropertyRef Name="id_jenis" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_surat_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="surat" Type="Self.surat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="nik" />
+            </Principal>
+            <Dependent Role="surat">
+              <PropertyRef Name="nik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_OpsModelStoreContainer">
+          <EntitySet Name="claim_medical" EntityType="Self.claim_medical" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cuti" EntityType="Self.cuti" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cuti_massal" EntityType="Self.cuti_massal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cuti_user" EntityType="Self.cuti_user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detail_surat" EntityType="Self.detail_surat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="jenis_surat" EntityType="Self.jenis_surat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lembur" EntityType="Self.lembur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="saldo_awal" EntityType="Self.saldo_awal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="saldo_medical" EntityType="Self.saldo_medical" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="slipgaji" EntityType="Self.slipgaji" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="surat" EntityType="Self.surat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_claim_medical_saldo_medical" Association="Self.FK_claim_medical_saldo_medical">
+            <End Role="saldo_medical" EntitySet="saldo_medical" />
+            <End Role="claim_medical" EntitySet="claim_medical" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cuti_user" Association="Self.FK_cuti_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="cuti" EntitySet="cuti" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cuti_user_user" Association="Self.FK_cuti_user_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="cuti_user" EntitySet="cuti_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_surat_surat" Association="Self.FK_detail_surat_surat">
+            <End Role="surat" EntitySet="surat" />
+            <End Role="detail_surat" EntitySet="detail_surat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_lembur_user" Association="Self.FK_lembur_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="lembur" EntitySet="lembur" />
+          </AssociationSet>
+          <AssociationSet Name="FK_saldo_medical_user" Association="Self.FK_saldo_medical_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="saldo_medical" EntitySet="saldo_medical" />
+          </AssociationSet>
+          <AssociationSet Name="FK_slipgaji_user" Association="Self.FK_slipgaji_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="slipgaji" EntitySet="slipgaji" />
+          </AssociationSet>
+          <AssociationSet Name="FK_surat_jenis_surat" Association="Self.FK_surat_jenis_surat">
+            <End Role="jenis_surat" EntitySet="jenis_surat" />
+            <End Role="surat" EntitySet="surat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_surat_user" Association="Self.FK_surat_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="surat" EntitySet="surat" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_OpsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="claim_medical">
+          <Key>
+            <PropertyRef Name="id_claim" />
+          </Key>
+          <Property Name="id_claim" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nama_pasien" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="hubungan" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="tipe_perawatan" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="tanggal_perawatan" Type="DateTime" Precision="0" />
+          <Property Name="nama_dokter" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="lokasi_RS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="no_telp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="diagnosa" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="total_tagihan" Type="Int32" Nullable="false" />
+          <Property Name="nik" Type="Int32" Nullable="false" />
+          <Property Name="total_claim" Type="Int32" Nullable="false" />
+          <Property Name="file_kwintasi" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="tanggal" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="keterangan" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="oleh" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="saldo_medical" Relationship="Self.FK_claim_medical_saldo_medical" FromRole="claim_medical" ToRole="saldo_medical" />
+        </EntityType>
+        <EntityType Name="cuti">
+          <Key>
+            <PropertyRef Name="id_cuti" />
+          </Key>
+          <Property Name="id_cuti" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nik" Type="Int32" Nullable="false" />
+          <Property Name="tanggal" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="durasi_awal" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="durasi_akhir" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="alamat" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="no_telp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="keterangan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="oleh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="user" Relationship="Self.FK_cuti_user" FromRole="cuti" ToRole="user" />
+        </EntityType>
+        <EntityType Name="cuti_massal">
+          <Key>
+            <PropertyRef Name="id_massal" />
+          </Key>
+          <Property Name="id_massal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tanggal" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="keterangan" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="oleh" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="cuti_user">
+          <Key>
+            <PropertyRef Name="nik" />
+          </Key>
+          <Property Name="nik" Type="Int32" Nullable="false" />
+          <Property Name="jatah_cuti" Type="Int32" Nullable="false" />
+          <Property Name="sisa_cuti" Type="Int32" Nullable="false" />
+          <Property Name="valid_jatah" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="valid_sisa" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="user" Relationship="Self.FK_cuti_user_user" FromRole="cuti_user" ToRole="user" />
+        </EntityType>
+        <EntityType Name="detail_surat">
+          <Key>
+            <PropertyRef Name="id_surat" />
+          </Key>
+          <Property Name="id_surat" Type="Int32" Nullable="false" />
+          <Property Name="nama_bank" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="keperluan" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="no_passport" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="tgl_pergi" Type="DateTime" Precision="0" />
+          <Property Name="tgl_pulang" Type="DateTime" Precision="0" />
+          <Property Name="tujuan" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="tujuan_instansi" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="kegiatan" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="lokasi" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="surat" Relationship="Self.FK_detail_surat_surat" FromRole="detail_surat" ToRole="surat" />
+        </EntityType>
+        <EntityType Name="jenis_surat">
+          <Key>
+            <PropertyRef Name="id_jenis" />
+          </Key>
+          <Property Name="id_jenis" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="jenis_surat1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="surats" Relationship="Self.FK_surat_jenis_surat" FromRole="jenis_surat" ToRole="surat" />
+        </EntityType>
+        <EntityType Name="lembur">
+          <Key>
+            <PropertyRef Name="id_lembur" />
+          </Key>
+          <Property Name="id_lembur" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nik" Type="Int32" Nullable="false" />
+          <Property Name="jam_mulai" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="jam_selesai" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="tanggal" Type="DateTime" Precision="0" />
+          <Property Name="reward" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="totalreward" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="oleh" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="user" Relationship="Self.FK_lembur_user" FromRole="lembur" ToRole="user" />
+          <Property Name="total_jam" Type="Time" Precision="7" />
+        </EntityType>
+        <EntityType Name="saldo_awal">
+          <Key>
+            <PropertyRef Name="id_saldo" />
+          </Key>
+          <Property Name="id_saldo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="default_inap" Type="Int32" Nullable="false" />
+          <Property Name="default_jalan" Type="Int32" Nullable="false" />
+          <Property Name="default_kacamata" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="saldo_medical">
+          <Key>
+            <PropertyRef Name="nik" />
+          </Key>
+          <Property Name="nik" Type="Int32" Nullable="false" />
+          <Property Name="saldo_rawatinap" Type="Int32" Nullable="false" />
+          <Property Name="saldo_rawatjalan" Type="Int32" Nullable="false" />
+          <Property Name="saldo_kacamata" Type="Int32" Nullable="false" />
+          <Property Name="valid_rawat" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="valid_kacamata" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="claim_medical" Relationship="Self.FK_claim_medical_saldo_medical" FromRole="saldo_medical" ToRole="claim_medical" />
+          <NavigationProperty Name="user" Relationship="Self.FK_saldo_medical_user" FromRole="saldo_medical" ToRole="user" />
+        </EntityType>
+        <EntityType Name="slipgaji">
+          <Key>
+            <PropertyRef Name="id_slip" />
+          </Key>
+          <Property Name="id_slip" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tanggal" Type="DateTime" Precision="0" />
+          <Property Name="nik" Type="Int32" Nullable="false" />
+          <Property Name="durasi_awal" Type="DateTime" Precision="0" />
+          <Property Name="durasi_akhir" Type="DateTime" Precision="0" />
+          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="user" Relationship="Self.FK_slipgaji_user" FromRole="slipgaji" ToRole="user" />
+        </EntityType>
+        <EntityType Name="surat">
+          <Key>
+            <PropertyRef Name="id_surat" />
+          </Key>
+          <Property Name="id_surat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_jenis" Type="Int32" Nullable="false" />
+          <Property Name="nik" Type="Int32" />
+          <Property Name="tanggal" Type="DateTime" Precision="0" />
+          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="keterangan" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="oleh" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="detail_surat" Relationship="Self.FK_detail_surat_surat" FromRole="surat" ToRole="detail_surat" />
+          <NavigationProperty Name="jenis_surat" Relationship="Self.FK_surat_jenis_surat" FromRole="surat" ToRole="jenis_surat" />
+          <NavigationProperty Name="user" Relationship="Self.FK_surat_user" FromRole="surat" ToRole="user" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="nik" />
+          </Key>
+          <Property Name="nik" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nama" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tempat_lahir" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="tanggal_lahir" Type="DateTime" Precision="0" />
+          <Property Name="jenis_kelamin" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="no_hp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="alamat_domisili" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="no_ktp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="alamat_ktp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="pendidikan_akhir" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="jurusan" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="agama" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="npwp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="status_pajak" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="bpjs" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="join_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="no_rekening" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="jabatan" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="penempatan" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="posisi" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="status_kerja" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="file_ktp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="file_npwp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="file_ijasah" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="file_rekening" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="foto_profil" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="nip" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="oleh" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cutis" Relationship="Self.FK_cuti_user" FromRole="user" ToRole="cuti" />
+          <NavigationProperty Name="cuti_user" Relationship="Self.FK_cuti_user_user" FromRole="user" ToRole="cuti_user" />
+          <NavigationProperty Name="lemburs" Relationship="Self.FK_lembur_user" FromRole="user" ToRole="lembur" />
+          <NavigationProperty Name="saldo_medical" Relationship="Self.FK_saldo_medical_user" FromRole="user" ToRole="saldo_medical" />
+          <NavigationProperty Name="slipgajis" Relationship="Self.FK_slipgaji_user" FromRole="user" ToRole="slipgaji" />
+          <NavigationProperty Name="surats" Relationship="Self.FK_surat_user" FromRole="user" ToRole="surat" />
+        </EntityType>
+        <Association Name="FK_claim_medical_saldo_medical">
+          <End Role="saldo_medical" Type="Self.saldo_medical" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="claim_medical" Type="Self.claim_medical" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="saldo_medical">
+              <PropertyRef Name="nik" />
+            </Principal>
+            <Dependent Role="claim_medical">
+              <PropertyRef Name="nik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cuti_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="cuti" Type="Self.cuti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="nik" />
+            </Principal>
+            <Dependent Role="cuti">
+              <PropertyRef Name="nik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cuti_user_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="cuti_user" Type="Self.cuti_user" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="nik" />
+            </Principal>
+            <Dependent Role="cuti_user">
+              <PropertyRef Name="nik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_surat_surat">
+          <End Role="surat" Type="Self.surat" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="detail_surat" Type="Self.detail_surat" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="surat">
+              <PropertyRef Name="id_surat" />
+            </Principal>
+            <Dependent Role="detail_surat">
+              <PropertyRef Name="id_surat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_surat_jenis_surat">
+          <End Role="jenis_surat" Type="Self.jenis_surat" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="surat" Type="Self.surat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="jenis_surat">
+              <PropertyRef Name="id_jenis" />
+            </Principal>
+            <Dependent Role="surat">
+              <PropertyRef Name="id_jenis" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_lembur_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="lembur" Type="Self.lembur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="nik" />
+            </Principal>
+            <Dependent Role="lembur">
+              <PropertyRef Name="nik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_saldo_medical_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="saldo_medical" Type="Self.saldo_medical" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="nik" />
+            </Principal>
+            <Dependent Role="saldo_medical">
+              <PropertyRef Name="nik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_slipgaji_user">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="slipgaji" Type="Self.slipgaji" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="nik" />
+            </Principal>
+            <Dependent Role="slipgaji">
+              <PropertyRef Name="nik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_surat_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="surat" Type="Self.surat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="nik" />
+            </Principal>
+            <Dependent Role="surat">
+              <PropertyRef Name="nik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbOpsModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="claim_medical" EntityType="Self.claim_medical" />
+          <EntitySet Name="cutis" EntityType="Self.cuti" />
+          <EntitySet Name="cuti_massal" EntityType="Self.cuti_massal" />
+          <EntitySet Name="cuti_user" EntityType="Self.cuti_user" />
+          <EntitySet Name="detail_surat" EntityType="Self.detail_surat" />
+          <EntitySet Name="jenis_surat" EntityType="Self.jenis_surat" />
+          <EntitySet Name="lemburs" EntityType="Self.lembur" />
+          <EntitySet Name="saldo_awal" EntityType="Self.saldo_awal" />
+          <EntitySet Name="saldo_medical" EntityType="Self.saldo_medical" />
+          <EntitySet Name="slipgajis" EntityType="Self.slipgaji" />
+          <EntitySet Name="surats" EntityType="Self.surat" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="FK_claim_medical_saldo_medical" Association="Self.FK_claim_medical_saldo_medical">
+            <End Role="saldo_medical" EntitySet="saldo_medical" />
+            <End Role="claim_medical" EntitySet="claim_medical" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cuti_user" Association="Self.FK_cuti_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="cuti" EntitySet="cutis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cuti_user_user" Association="Self.FK_cuti_user_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="cuti_user" EntitySet="cuti_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_surat_surat" Association="Self.FK_detail_surat_surat">
+            <End Role="surat" EntitySet="surats" />
+            <End Role="detail_surat" EntitySet="detail_surat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_surat_jenis_surat" Association="Self.FK_surat_jenis_surat">
+            <End Role="jenis_surat" EntitySet="jenis_surat" />
+            <End Role="surat" EntitySet="surats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_lembur_user" Association="Self.FK_lembur_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="lembur" EntitySet="lemburs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_saldo_medical_user" Association="Self.FK_saldo_medical_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="saldo_medical" EntitySet="saldo_medical" />
+          </AssociationSet>
+          <AssociationSet Name="FK_slipgaji_user" Association="Self.FK_slipgaji_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="slipgaji" EntitySet="slipgajis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_surat_user" Association="Self.FK_surat_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="surat" EntitySet="surats" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_OpsModelStoreContainer" CdmEntityContainer="dbOpsModel">
+          <EntitySetMapping Name="claim_medical">
+            <EntityTypeMapping TypeName="db_OpsModel.claim_medical">
+              <MappingFragment StoreEntitySet="claim_medical">
+                <ScalarProperty Name="id_claim" ColumnName="id_claim" />
+                <ScalarProperty Name="nama_pasien" ColumnName="nama_pasien" />
+                <ScalarProperty Name="hubungan" ColumnName="hubungan" />
+                <ScalarProperty Name="tipe_perawatan" ColumnName="tipe_perawatan" />
+                <ScalarProperty Name="tanggal_perawatan" ColumnName="tanggal_perawatan" />
+                <ScalarProperty Name="nama_dokter" ColumnName="nama_dokter" />
+                <ScalarProperty Name="lokasi_RS" ColumnName="lokasi_RS" />
+                <ScalarProperty Name="no_telp" ColumnName="no_telp" />
+                <ScalarProperty Name="diagnosa" ColumnName="diagnosa" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="total_tagihan" ColumnName="total_tagihan" />
+                <ScalarProperty Name="nik" ColumnName="nik" />
+                <ScalarProperty Name="total_claim" ColumnName="total_claim" />
+                <ScalarProperty Name="file_kwintasi" ColumnName="file_kwintasi" />
+                <ScalarProperty Name="tanggal" ColumnName="tanggal" />
+                <ScalarProperty Name="keterangan" ColumnName="keterangan" />
+                <ScalarProperty Name="oleh" ColumnName="oleh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cutis">
+            <EntityTypeMapping TypeName="db_OpsModel.cuti">
+              <MappingFragment StoreEntitySet="cuti">
+                <ScalarProperty Name="id_cuti" ColumnName="id_cuti" />
+                <ScalarProperty Name="nik" ColumnName="nik" />
+                <ScalarProperty Name="tanggal" ColumnName="tanggal" />
+                <ScalarProperty Name="durasi_awal" ColumnName="durasi_awal" />
+                <ScalarProperty Name="durasi_akhir" ColumnName="durasi_akhir" />
+                <ScalarProperty Name="alamat" ColumnName="alamat" />
+                <ScalarProperty Name="no_telp" ColumnName="no_telp" />
+                <ScalarProperty Name="keterangan" ColumnName="keterangan" />
+                <ScalarProperty Name="oleh" ColumnName="oleh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cuti_massal">
+            <EntityTypeMapping TypeName="db_OpsModel.cuti_massal">
+              <MappingFragment StoreEntitySet="cuti_massal">
+                <ScalarProperty Name="id_massal" ColumnName="id_massal" />
+                <ScalarProperty Name="tanggal" ColumnName="tanggal" />
+                <ScalarProperty Name="keterangan" ColumnName="keterangan" />
+                <ScalarProperty Name="oleh" ColumnName="oleh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cuti_user">
+            <EntityTypeMapping TypeName="db_OpsModel.cuti_user">
+              <MappingFragment StoreEntitySet="cuti_user">
+                <ScalarProperty Name="nik" ColumnName="nik" />
+                <ScalarProperty Name="jatah_cuti" ColumnName="jatah_cuti" />
+                <ScalarProperty Name="sisa_cuti" ColumnName="sisa_cuti" />
+                <ScalarProperty Name="valid_jatah" ColumnName="valid_jatah" />
+                <ScalarProperty Name="valid_sisa" ColumnName="valid_sisa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="detail_surat">
+            <EntityTypeMapping TypeName="db_OpsModel.detail_surat">
+              <MappingFragment StoreEntitySet="detail_surat">
+                <ScalarProperty Name="id_surat" ColumnName="id_surat" />
+                <ScalarProperty Name="nama_bank" ColumnName="nama_bank" />
+                <ScalarProperty Name="keperluan" ColumnName="keperluan" />
+                <ScalarProperty Name="no_passport" ColumnName="no_passport" />
+                <ScalarProperty Name="tgl_pergi" ColumnName="tgl_pergi" />
+                <ScalarProperty Name="tgl_pulang" ColumnName="tgl_pulang" />
+                <ScalarProperty Name="tujuan" ColumnName="tujuan" />
+                <ScalarProperty Name="tujuan_instansi" ColumnName="tujuan_instansi" />
+                <ScalarProperty Name="kegiatan" ColumnName="kegiatan" />
+                <ScalarProperty Name="lokasi" ColumnName="lokasi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="jenis_surat">
+            <EntityTypeMapping TypeName="db_OpsModel.jenis_surat">
+              <MappingFragment StoreEntitySet="jenis_surat">
+                <ScalarProperty Name="id_jenis" ColumnName="id_jenis" />
+                <ScalarProperty Name="jenis_surat1" ColumnName="jenis_surat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lemburs">
+            <EntityTypeMapping TypeName="db_OpsModel.lembur">
+              <MappingFragment StoreEntitySet="lembur">
+                <ScalarProperty Name="total_jam" ColumnName="total_jam" />
+                <ScalarProperty Name="id_lembur" ColumnName="id_lembur" />
+                <ScalarProperty Name="nik" ColumnName="nik" />
+                <ScalarProperty Name="jam_mulai" ColumnName="jam_mulai" />
+                <ScalarProperty Name="jam_selesai" ColumnName="jam_selesai" />
+                <ScalarProperty Name="tanggal" ColumnName="tanggal" />
+                <ScalarProperty Name="reward" ColumnName="reward" />
+                <ScalarProperty Name="totalreward" ColumnName="totalreward" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="oleh" ColumnName="oleh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="saldo_awal">
+            <EntityTypeMapping TypeName="db_OpsModel.saldo_awal">
+              <MappingFragment StoreEntitySet="saldo_awal">
+                <ScalarProperty Name="id_saldo" ColumnName="id_saldo" />
+                <ScalarProperty Name="default_inap" ColumnName="default_inap" />
+                <ScalarProperty Name="default_jalan" ColumnName="default_jalan" />
+                <ScalarProperty Name="default_kacamata" ColumnName="default_kacamata" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="saldo_medical">
+            <EntityTypeMapping TypeName="db_OpsModel.saldo_medical">
+              <MappingFragment StoreEntitySet="saldo_medical">
+                <ScalarProperty Name="nik" ColumnName="nik" />
+                <ScalarProperty Name="saldo_rawatinap" ColumnName="saldo_rawatinap" />
+                <ScalarProperty Name="saldo_rawatjalan" ColumnName="saldo_rawatjalan" />
+                <ScalarProperty Name="saldo_kacamata" ColumnName="saldo_kacamata" />
+                <ScalarProperty Name="valid_rawat" ColumnName="valid_rawat" />
+                <ScalarProperty Name="valid_kacamata" ColumnName="valid_kacamata" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="slipgajis">
+            <EntityTypeMapping TypeName="db_OpsModel.slipgaji">
+              <MappingFragment StoreEntitySet="slipgaji">
+                <ScalarProperty Name="id_slip" ColumnName="id_slip" />
+                <ScalarProperty Name="tanggal" ColumnName="tanggal" />
+                <ScalarProperty Name="nik" ColumnName="nik" />
+                <ScalarProperty Name="durasi_awal" ColumnName="durasi_awal" />
+                <ScalarProperty Name="durasi_akhir" ColumnName="durasi_akhir" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="surats">
+            <EntityTypeMapping TypeName="db_OpsModel.surat">
+              <MappingFragment StoreEntitySet="surat">
+                <ScalarProperty Name="id_surat" ColumnName="id_surat" />
+                <ScalarProperty Name="id_jenis" ColumnName="id_jenis" />
+                <ScalarProperty Name="nik" ColumnName="nik" />
+                <ScalarProperty Name="tanggal" ColumnName="tanggal" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="keterangan" ColumnName="keterangan" />
+                <ScalarProperty Name="oleh" ColumnName="oleh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="db_OpsModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="nik" ColumnName="nik" />
+                <ScalarProperty Name="nama" ColumnName="nama" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="tempat_lahir" ColumnName="tempat_lahir" />
+                <ScalarProperty Name="tanggal_lahir" ColumnName="tanggal_lahir" />
+                <ScalarProperty Name="jenis_kelamin" ColumnName="jenis_kelamin" />
+                <ScalarProperty Name="no_hp" ColumnName="no_hp" />
+                <ScalarProperty Name="alamat_domisili" ColumnName="alamat_domisili" />
+                <ScalarProperty Name="no_ktp" ColumnName="no_ktp" />
+                <ScalarProperty Name="alamat_ktp" ColumnName="alamat_ktp" />
+                <ScalarProperty Name="pendidikan_akhir" ColumnName="pendidikan_akhir" />
+                <ScalarProperty Name="jurusan" ColumnName="jurusan" />
+                <ScalarProperty Name="agama" ColumnName="agama" />
+                <ScalarProperty Name="npwp" ColumnName="npwp" />
+                <ScalarProperty Name="status_pajak" ColumnName="status_pajak" />
+                <ScalarProperty Name="bpjs" ColumnName="bpjs" />
+                <ScalarProperty Name="join_date" ColumnName="join_date" />
+                <ScalarProperty Name="no_rekening" ColumnName="no_rekening" />
+                <ScalarProperty Name="jabatan" ColumnName="jabatan" />
+                <ScalarProperty Name="penempatan" ColumnName="penempatan" />
+                <ScalarProperty Name="posisi" ColumnName="posisi" />
+                <ScalarProperty Name="status_kerja" ColumnName="status_kerja" />
+                <ScalarProperty Name="file_ktp" ColumnName="file_ktp" />
+                <ScalarProperty Name="file_npwp" ColumnName="file_npwp" />
+                <ScalarProperty Name="file_ijasah" ColumnName="file_ijasah" />
+                <ScalarProperty Name="file_rekening" ColumnName="file_rekening" />
+                <ScalarProperty Name="foto_profil" ColumnName="foto_profil" />
+                <ScalarProperty Name="nip" ColumnName="nip" />
+                <ScalarProperty Name="oleh" ColumnName="oleh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

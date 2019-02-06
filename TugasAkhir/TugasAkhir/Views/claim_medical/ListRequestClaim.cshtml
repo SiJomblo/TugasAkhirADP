@@ -1,0 +1,59 @@
+﻿@model IEnumerable<TugasAkhir.Models.claim_medical>
+
+
+@{
+    ViewBag.Title = "ViewAll";
+    Layout = null;
+}
+<div class="table table-responsive" style="padding-top:5px !important;">
+    <table class="table table-striped table-condensed hover" id="a">
+        <thead>
+            <tr>
+                <th>
+                    NIK
+                </th>
+                <th>
+                    NAME
+                </th>
+                <th>
+                    DATE
+                </th>
+                <th>
+                    TYPE OF TREATMENT
+                </th>
+                <th>
+                    STATUS
+                </th>
+                <th>
+                    OPTIONS
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.saldo_medical.user.nip)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.saldo_medical.user.nama)
+                    </td>
+                    <td>
+                        @String.Format("{0:dd MMMM yyyy}", item.tanggal)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tipe_perawatan)
+                    </td>
+                    <td>
+                        <span class="label label-info">@Html.DisplayFor(modelItem => item.status)</span>
+                    </td>
+                    <td>
+                        <a onclick="DetailClaim('@Url.Action("Details", "claim_medical", new { id=item.id_claim})')" class="btn btn-success" title="Tampilkan Detail Sebelum Accept"><i class="fa fa-check-circle"></i> Accept</a>
+                        <a onclick="EditClaim('@Url.Action("EditClaim", "claim_medical", new { id=item.id_claim})')" class="btn btn-danger" title="Tampilkan Detail Sebelum Reject"><i class="fa fa-times-circle"></i> Reject</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<TugasAkhir.Models.surat>
+
+@{
+    ViewBag.Title = "Riwayat Pemberitahuan";
+    Layout = null;
+}
+<div class="table table-responsive" style="padding-top:5px !important;">
+    <table class="table table-striped table-condensed hover" id="b">
+        <thead>
+            <tr>
+                <th>
+                    NIK
+                </th>
+                <th>
+                    NAME
+                </th>
+                <th>
+                    DATE
+                </th>
+                <th>
+                    PASSPORT NUMBER
+                </th>
+                <th>
+                    LEAVE DATE
+                </th>
+                <th>
+                    RETURN DATE
+                </th>
+                <th>
+                    DESTINATION
+                </th>
+                <th>
+                    ANNOTATION
+                </th>
+                <th>
+                    BY
+                </th>
+                <th>
+                    STATUS
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user.nip)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user.nama)
+                </td>
+                <td>
+                    @String.Format("{0:dd MMMM yyyy}", item.tanggal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.detail_surat.no_passport)
+                </td>
+                <td>
+                    @String.Format("{0:dd MMMM yyyy}", item.detail_surat.tgl_pergi)
+                </td>
+                <td>
+                    @String.Format("{0:dd MMMM yyyy}", item.detail_surat.tgl_pulang)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.detail_surat.tujuan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.keterangan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.oleh)
+                </td>
+                <td>
+                    <span class="label label-success">@Html.DisplayFor(modelItem => item.status)</span>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
