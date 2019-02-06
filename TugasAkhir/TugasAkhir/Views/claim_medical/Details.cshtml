@@ -5,7 +5,7 @@
     Layout = null;
 }
 
-<div>
+<div class="row">
     <hr />
     <div class="col-md-6">
         <table class="table table-striped">
@@ -134,13 +134,22 @@
             </tr>
         </table>
     </div>
+</div>
+<div class="row">
     <hr style="border: 1px solid #eaeaea" />
-    <div class="col-md-offset-10">
-        @if (Model.status == "Request" && Session["jabatan"].ToString() != "k")
-        {
-            <a onclick="AcceptClaim('@Url.Action("AcceptClaim", "claim_medical", new { id=Model.id_claim})')" class="btn btn-success" id="btn-accept" title="Accept"><span class="fa fa-check-circle"></span>  Accept</a>
-        }
-    </div>
+    @if (Model.status == "Request" && Session["jabatan"].ToString() != "k")
+    {
+        <div class="col-md-offset-9 col-md-3">
+            <a onclick="AcceptClaim('@Url.Action("AcceptClaim", "claim_medical", new { id = Model.id_claim })')" class="btn btn-success" id="btn-accept" title="Accept"><span class="fa fa-check-circle"></span>  Accept</a>
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-window-close"></i> Close</button>
+        </div>
+    }
+    else
+    {
+        <div class="col-md-offset-10 col-md-2">            
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-window-close"></i> Close</button>
+        </div>
+    }
 </div>
 
 
