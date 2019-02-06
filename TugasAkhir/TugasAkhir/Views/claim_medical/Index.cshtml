@@ -11,15 +11,15 @@
     <li class="active"><a data-toggle="tab" href="#listrequest">List Request</a></li>
     <li><a data-toggle="tab" href="#listreject">List Reject</a></li>
     <li><a data-toggle="tab" href="#riwayatclaim">Riwayat Claim</a></li>
-    <li id="tab1"><a data-toggle="tab" href="#detailclaim">Detail Claim</a></li>
-    <li id="tab2"><a data-toggle="tab" href="#editclaim">Reject Claim</a></li>
+    @*<li id="tab1"><a data-toggle="tab" href="#detailclaim">Detail Claim</a></li>*@
+    @*<li id="tab2"><a data-toggle="tab" href="#editclaim">Reject Claim</a></li>*@
 </ul>
 <div class="tab-content">
     <div id="listrequest" class="tab-pane fade in active">@Html.Action("ListRequestClaim")</div>
     <div id="listreject" class="tab-pane fade in">@Html.Action("RejectClaim")</div>
     <div id="riwayatclaim" class="tab-pane fade in">@Html.Action("RiwayatClaim")</div>
-    <div id="detailclaim" class="tab-pane fade in">@Html.Action("Details")</div>
-    <div id="editclaim" class="tab-pane fade in">@Html.Action("EditClaim")</div>
+    @*<div id="detailclaim" class="tab-pane fade in">@Html.Action("Details")</div>*@
+    @*<div id="editclaim" class="tab-pane fade in">@Html.Action("EditClaim")</div>*@
 </div>
 
 <div id="Saldo" class="modal fade" role="dialog">
@@ -38,6 +38,39 @@
     </div>
 </div>
 
+<div id="DClaim" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- konten modal-->
+        <div class="modal-content">
+            <!-- heading modal -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h1 class="modal-title text-center" style="font-family:'Engravers MT'; font-size:xx-large;"><b><i class="fa fa-file-alt"></i> Detail Claim</b></h1>
+            </div>
+            <!-- body modal -->
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="EClaim" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- konten modal-->
+        <div class="modal-content">
+            <!-- heading modal -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h1 class="modal-title text-center" style="font-family:'Engravers MT'; font-size:xx-large;"><b><i class="fa fa-file-alt"></i> Edit Claim</b></h1>
+            </div>
+            <!-- body modal -->
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 @section scripts{
@@ -74,34 +107,7 @@
                 }
             });
         }
-
-        function DetailClaim(url) {
-            $.ajax({
-                type: 'GET',
-                url: url,
-                success: function (response) {
-                    $('#tab2').hide();
-                    $('#tab1').show();
-                    $("#detailclaim").html(response);
-                    $('ul.nav.nav-tabs a:eq(3)').tab('show');
-                }
-            });
-        }
-
-
-
-        function EditClaim(url) {
-            $.ajax({
-                type: 'GET',
-                url: url,
-                success: function (response) {
-                    $('#tab1').hide();
-                    $('#tab2').show();
-                    $("#editclaim").html(response);
-                    $('ul.nav.nav-tabs a:eq(4)').tab('show');
-                }
-            });
-        }
+        
 
         function GetRiwayatClaim() {
             $.ajax({
@@ -129,6 +135,18 @@
             });
         }
 
+//Modal Edit Claim
+        function EditClaim(url) {
+            $("#EClaim").modal("show");
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (response) {
+                    $("#EClaim .modal-body").html(response);
+                }
+            });
+        }
+
         function ajaxeditclaim(form) {
             var x = $("#keterangan").val();
             if (x == "") {
@@ -145,6 +163,7 @@
                         if (response.success) {
                             hidetab();
                             GetRejectClaim();
+                            $("#EClaim").modal("hide");
                             $("#listrequest").html(response.html);
                             $('ul.nav.nav-tabs a:eq(0)').tab('show');
                             $.notify(response.message, "success");
@@ -217,7 +236,7 @@
                         url: url,
                         success: function (response) {
                             if (response.success) {
-                                hidetab();
+                                $("#DClaim").modal("hide");
                                 GetRiwayatClaim();
                                 $("#listrequest").html(response.html);
                                 $('ul.nav.nav-tabs a:eq(0)').tab('show');
@@ -231,6 +250,20 @@
                             }
                         }
                     });
+                }
+            });
+        }
+
+// Modal Detail Claim
+        function DetailClaim(url) {
+            $('#DClaim').modal('show');
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (response) {
+                    $('#tab2').hide();
+                    $("#DClaim .modal-body").html(response);
+                    //$('ul.nav.nav-tabs a:eq(3)').tab('show');
                 }
             });
         }

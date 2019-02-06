@@ -135,7 +135,7 @@
         </table>
     </div>
     <hr style="border: 1px solid #eaeaea" />
-    <div class="col-md-offset-11">
+    <div class="col-md-offset-10">
         @if (Model.status == "Request" && Session["jabatan"].ToString() != "k")
         {
             <a onclick="AcceptClaim('@Url.Action("AcceptClaim", "claim_medical", new { id=Model.id_claim})')" class="btn btn-success" id="btn-accept" title="Accept"><span class="fa fa-check-circle"></span>  Accept</a>
