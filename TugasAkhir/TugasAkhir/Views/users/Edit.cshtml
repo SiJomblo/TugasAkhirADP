@@ -5,7 +5,7 @@
     Layout = null;
 }
 
-@using (Html.BeginForm("Edit", "users", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "return ajaxedit(this);", data_restUrl = Url.Action("Edit", "users") }))
+@using (Html.BeginForm("Edit", "users", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "return ajaxedit(this);", data_restUrl = Url.Action("Edit", "users")}))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
@@ -132,14 +132,14 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.npwp, "NPWP", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.EditorFor(model => model.npwp, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.npwp, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.npwp, new { htmlAttributes = new { @class = "form-control", @pattern = "[0-9]{2}[.][0-9]{3}[.][0-9]{3}[.][0-9]{1}[-][0-9]{3}[.][0-9]{3}" } })
+                        @Html.ValidationMessageFor(model => model.npwp, "", new { @class = "text -danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.status_pajak, "Status Pajak", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.EditorFor(model => model.status_pajak, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.status_pajak, new { htmlAttributes = new { @class = "form-control", @pattern = "[0-9]{1}" } })
                         @Html.ValidationMessageFor(model => model.status_pajak, "", new { @class = "text-danger" })
                     </div>
                 </div>

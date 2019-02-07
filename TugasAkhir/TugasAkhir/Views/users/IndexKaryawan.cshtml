@@ -139,6 +139,7 @@
             });
         };
 
+       
         function ajaxedit(form) {
             $.validator.unobtrusive.parse(form);
             if ($(form).valid()) {
@@ -191,5 +192,12 @@
             return false;
             return true;
         }
+
+        //$(document).ready(function () {
+        //    $.validator.methods.pattern = function (value, element) {
+        //        return (this.optional(element) || new RegExp(element.pattern).test(value));
+        //    };
+        //    $.validator.messages.pattern = "<font color='red'>Format Salah Ex: 12.345.678.9-123.000</font>";
+        //});           
     </script>
 }
