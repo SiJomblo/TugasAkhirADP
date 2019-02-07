@@ -68,7 +68,7 @@ namespace TugasAkhir.Controllers
         {        
             try
             {
-                var cutitit = db.cutis.Where(u => u.nik == cute.nik && ((u.durasi_awal == cute.durasi_awal || u.durasi_akhir == cute.durasi_akhir)||(u.durasi_akhir == cute.durasi_akhir || u.durasi_akhir == cute.durasi_awal))).FirstOrDefault();
+                var cutitit = db.cutis.Where(u => u.nik == cute.nik && ((u.durasi_awal >= cute.durasi_awal && u.durasi_awal <= cute.durasi_akhir)||(u.durasi_akhir <= cute.durasi_akhir && u.durasi_akhir >= cute.durasi_awal))).FirstOrDefault();
                 if (cutitit != null)
                 {
                     return Json(new { success = false, message = "Cuti sudah ada di hari yang sama!" }, JsonRequestBehavior.AllowGet);
@@ -78,6 +78,11 @@ namespace TugasAkhir.Controllers
                 db.cutis.Add(cute);
                 cuti_user cutis = db.cuti_user.Find(cute.nik);
                 int totalhari = Convert.ToInt32((cute.durasi_akhir - cute.durasi_awal).TotalDays);
+                totalhari += 1;
+                if (totalhari <= 0)
+                {
+                    return Json(new { success = false, message = "Periksa kembali tanggal yang diinput!" }, JsonRequestBehavior.AllowGet);
+                }
                 if (cutis.sisa_cuti >= totalhari)
                 {
                     cutis.sisa_cuti -= totalhari;
