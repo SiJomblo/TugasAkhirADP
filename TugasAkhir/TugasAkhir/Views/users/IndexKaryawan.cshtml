@@ -113,7 +113,14 @@
                         }
                     });
         }
-        $(document).ready(function () { hideall() });
+        $(document).ready(function () {
+            hideall();
+            $.validator.methods.pattern = function (value, element) {
+                return (this.optional(element) || new RegExp(element.pattern).test(value));
+            };
+            $.validator.messages.pattern = "<font color='red'>Format Salah Ex: 12.345.678.9-123.000</font>";
+        });
+
         function hideall() {
             $("#spanemail1").hide();
             $("#spanemail2").hide();
@@ -193,11 +200,5 @@
             return true;
         }
 
-        //$(document).ready(function () {
-        //    $.validator.methods.pattern = function (value, element) {
-        //        return (this.optional(element) || new RegExp(element.pattern).test(value));
-        //    };
-        //    $.validator.messages.pattern = "<font color='red'>Format Salah Ex: 12.345.678.9-123.000</font>";
-        //});           
     </script>
 }

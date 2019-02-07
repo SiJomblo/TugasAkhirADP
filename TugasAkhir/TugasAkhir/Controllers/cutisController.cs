@@ -68,6 +68,11 @@ namespace TugasAkhir.Controllers
         {        
             try
             {
+                var cutitit = db.cutis.Where(u => u.nik == cute.nik && ((u.durasi_awal == cute.durasi_awal || u.durasi_akhir == cute.durasi_akhir)||(u.durasi_akhir == cute.durasi_akhir || u.durasi_akhir == cute.durasi_awal))).FirstOrDefault();
+                if (cutitit != null)
+                {
+                    return Json(new { success = false, message = "Cuti sudah ada di hari yang sama!" }, JsonRequestBehavior.AllowGet);
+                }
                 cute.tanggal = DateTime.Today;
                 cute.oleh = Session["nama"].ToString();
                 db.cutis.Add(cute);
