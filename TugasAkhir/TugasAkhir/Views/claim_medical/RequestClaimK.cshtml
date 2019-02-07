@@ -70,7 +70,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.no_telp, "No. Telpon RS", htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.no_telp, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number" } })
+                        @Html.EditorFor(model => model.no_telp, new { htmlAttributes = new { @class = "form-control", @required = "required", @onkeypress = "return hanyaAngka(event)" } })
                         @Html.ValidationMessageFor(model => model.no_telp, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.total_tagihan, "Total Tagihan", htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.total_tagihan, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number" } })
+                        @Html.EditorFor(model => model.total_tagihan, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "text", @onkeypress = "return hanyaAngka(event)" } })
                         @Html.ValidationMessageFor(model => model.total_tagihan, "", new { @class = "text-danger" })
                     </div>
                 </div>

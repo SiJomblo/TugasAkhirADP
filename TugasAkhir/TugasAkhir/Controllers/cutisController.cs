@@ -118,6 +118,7 @@ namespace TugasAkhir.Controllers
                     cuti_massal cutimassal = new cuti_massal();
                     cutimassal.tanggal = Convert.ToDateTime(get["tanggal"]);
                     cutimassal.keterangan = get["keterangan"];
+                    cutimassal.jumlah = totalhari;
                     cutimassal.oleh = Session["nama"].ToString();
                     db.cuti_massal.Add(cutimassal);
                     db.SaveChanges();

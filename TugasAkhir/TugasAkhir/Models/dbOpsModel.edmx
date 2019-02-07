@@ -47,6 +47,7 @@
           </Key>
           <Property Name="id_massal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="tanggal" Type="date" Nullable="false" />
+          <Property Name="jumlah" Type="int" />
           <Property Name="keterangan" Type="varchar(max)" />
           <Property Name="oleh" Type="varchar(max)" />
         </EntityType>
@@ -88,9 +89,9 @@
           </Key>
           <Property Name="id_lembur" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nik" Type="int" Nullable="false" />
-          <Property Name="jam_mulai" Type="time" Precision="7" Nullable="false" />
-          <Property Name="jam_selesai" Type="time" Precision="7" Nullable="false" />
-          <Property Name="total_jam" Type="time" Precision="7" />
+          <Property Name="jam_mulai" Type="time" Precision="0" Nullable="false" />
+          <Property Name="jam_selesai" Type="time" Precision="0" Nullable="false" />
+          <Property Name="total_jam" Type="time" Precision="0" Nullable="false" />
           <Property Name="tanggal" Type="date" />
           <Property Name="reward" Type="decimal" Precision="18" Scale="0" />
           <Property Name="totalreward" Type="decimal" Precision="18" Scale="0" />
@@ -401,6 +402,7 @@
           <Property Name="tanggal" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="keterangan" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="oleh" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="jumlah" Type="Int32" />
         </EntityType>
         <EntityType Name="cuti_user">
           <Key>
@@ -443,15 +445,15 @@
           </Key>
           <Property Name="id_lembur" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nik" Type="Int32" Nullable="false" />
-          <Property Name="jam_mulai" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="jam_selesai" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="jam_mulai" Type="Time" Nullable="false" Precision="0" />
+          <Property Name="jam_selesai" Type="Time" Nullable="false" Precision="0" />
           <Property Name="tanggal" Type="DateTime" Precision="0" />
           <Property Name="reward" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="totalreward" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="oleh" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="user" Relationship="Self.FK_lembur_user" FromRole="lembur" ToRole="user" />
-          <Property Name="total_jam" Type="Time" Precision="7" />
+          <Property Name="total_jam" Type="Time" Precision="0" Nullable="false" />
         </EntityType>
         <EntityType Name="saldo_awal">
           <Key>
@@ -766,6 +768,7 @@
           <EntitySetMapping Name="cuti_massal">
             <EntityTypeMapping TypeName="db_OpsModel.cuti_massal">
               <MappingFragment StoreEntitySet="cuti_massal">
+                <ScalarProperty Name="jumlah" ColumnName="jumlah" />
                 <ScalarProperty Name="id_massal" ColumnName="id_massal" />
                 <ScalarProperty Name="tanggal" ColumnName="tanggal" />
                 <ScalarProperty Name="keterangan" ColumnName="keterangan" />
