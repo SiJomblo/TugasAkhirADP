@@ -127,13 +127,16 @@
         }
 
         function CheckEmailEdit() {
-            email = $('#email').val();
-            $.ajax({
-                type: "POST",
-                url: "users/JsonGetEmailEdit",
-                data: { em: email },
-                success: function (result) {
-                    if (result != "NULL") {
+            $.post("@Url.Action("JsonGetEmailEdit", "users")",
+                {
+                    userdata: $("#email").val()                 
+                },
+                function (data) {
+                    if (data == 2) {                   
+                        $("#confir2").attr("class", "form-group has-success has-feedback");
+                        $("#spanemail1").show();
+                        $("#spanemail2").hide();
+                    } else if (data == 1) {                    
                         $("#confir2").attr("class", "form-group has-error has-feedback");
                         $("#spanemail1").hide();
                         $("#spanemail2").show();
@@ -142,9 +145,8 @@
                         $("#spanemail1").show();
                         $("#spanemail2").hide();
                     }
-                },
-            });
-        };
+                });
+        }
 
        
         function ajaxedit(form) {
