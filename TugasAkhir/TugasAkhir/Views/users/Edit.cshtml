@@ -77,7 +77,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.no_hp, "No. Handphone", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.EditorFor(model => model.no_hp, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.no_hp, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return hanyaAngka(event)", maxlength = "13" } })
                         @Html.ValidationMessageFor(model => model.no_hp, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -160,8 +160,8 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.no_rekening, "No. Rekening", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.EditorFor(model => model.no_rekening, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.no_rekening, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.no_rekening, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return hanyaAngka(event)"} })
+                        @Html.ValidationMessageFor(model => model.no_rekening, "", new { @class = "text-danger"})
                     </div>
                 </div>
 
@@ -175,7 +175,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.no_ktp, "No. KTP", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.EditorFor(model => model.no_ktp, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.no_ktp, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return hanyaAngka(event)", maxlength = "16" } })
                         @Html.ValidationMessageFor(model => model.no_ktp, "", new { @class = "text-danger" })
                     </div>
                 </div>
