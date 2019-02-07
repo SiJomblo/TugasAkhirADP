@@ -18,5 +18,6 @@ namespace TugasAkhir.Models
         public System.DateTime tanggal { get; set; }
         public string keterangan { get; set; }
         public string oleh { get; set; }
+        public Nullable<int> jumlah { get; set; }
     }
 }

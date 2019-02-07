@@ -12,13 +12,16 @@
                     DATE
                 </th>
                 <th>
-                     ANNOTATION
+                    TOTAL DAYS
+                </th>
+                <th>
+                    ANNOTATION
                 </th>
                 @if (Session["jabatan"].ToString() != "k")
                 {
-                <th>
-                    ADDED BY 
-                </th>
+                    <th>
+                        ADDED BY
+                    </th>
                 }
             </tr>
         </thead>
@@ -30,14 +33,17 @@
                     @String.Format("{0:dd MMMM yyyy}", item.tanggal)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.jumlah)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.keterangan)
-                </td>              
+                </td>
                 @if (Session["jabatan"].ToString() != "k")
                 {
-                <td>
-                    @Html.DisplayFor(modelItem => item.oleh)
-                </td>
-                }              
+                    <td>
+                        @Html.DisplayFor(modelItem => item.oleh)
+                    </td>
+                }
             </tr>
             }
         </tbody>
