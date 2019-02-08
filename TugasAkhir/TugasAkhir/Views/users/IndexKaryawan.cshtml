@@ -115,11 +115,51 @@
                             }
                         }
                     },
+                    foto: {
+                        validators: {
+                            file: {
+                                extension: 'jpeg,jpg,png',
+                                type: 'image/png,image/jpg,image/jpeg',
+                                maxSize: 2048 * 1024,
+                                message: 'Format file salah, ukuran max 2Mb!'
+                            },
+                        }
+                    },
                     filektp: {
                         validators: {
                             file: {
                                 extension: 'jpeg,jpg,png,pdf',
-                                type: 'image/png,image/jpg,image/jpeg,file/pdf',
+                                type: 'image/png,image/jpg,image/jpeg,application/pdf',
+                                maxSize: 2048 * 1024,
+                                message: 'Format file salah, ukuran max 2Mb!'
+                            },
+                        }
+                    },
+                    filenpwp: {
+                        validators: {
+                            file: {
+                                extension: 'jpeg,jpg,png,pdf',
+                                type: 'image/png,image/jpg,image/jpeg,application/pdf',
+                                maxSize: 2048 * 1024,
+                                message: 'Format file salah, ukuran max 2Mb!'
+                            }
+                        }
+                    },
+                    filerekening: {
+                        validators: {
+                            file: {
+                                extension: 'jpeg,jpg,png,pdf',
+                                type: 'image/png,image/jpg,image/jpeg,application/pdf',
+                                maxSize: 2048 * 1024,
+                                message: 'Format file salah, ukuran max 2Mb!'
+                            }
+                        }
+                    },
+                    fileijasah: {
+                        validators: {
+                            file: {
+                                extension: 'jpeg,jpg,png,pdf',
+                                type: 'image/png,image/jpg,image/jpeg,application/pdf',
                                 maxSize: 2048 * 1024,
                                 message: 'Format file salah, ukuran max 2Mb!'
                             }

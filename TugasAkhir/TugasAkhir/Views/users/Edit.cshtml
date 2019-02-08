@@ -113,7 +113,7 @@
                 @Html.LabelFor(model => model.foto_profil, "Foto", htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
                     <img src="@Url.Content(Model.foto_profil)" class="img-circle" style="margin:10px;" width="200" height="200" id="imagePreview" />
-                    <input type="file" name="foto" accept="image/jpeg, image/png" onchange="ShowImagePreview(this, document.getElementById('imagePreview'))" />
+                    <input type="file" name="foto" id="foto" accept="image/jpeg, image/png" onchange="ShowImagePreview(this, document.getElementById('imagePreview'))" />
                 </div>
             </div>
         </div>
@@ -201,19 +201,19 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.file_npwp, "NPWP", htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
-                    <input type="file" name="filenpwp" accept="image/jpeg, image/png, .doc, .docx, .pdf" />
+                    <input type="file" name="filenpwp" id="filenpwp" accept="image/jpeg, image/png, .doc, .docx, .pdf" />
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.file_rekening, "Rekening", htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
-                    <input type="file" name="filerekening" accept="image/jpeg, image/png, .doc, .docx, .pdf" />
+                    <input type="file" name="filerekening" id="filerekening" accept="image/jpeg, image/png, .doc, .docx, .pdf" />
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.file_ijasah, "Ijasah", htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
-                    <input type="file" name="fileijasah" accept="image/jpeg, image/png, .doc, .docx, .pdf" />
+                    <input type="file" name="fileijasah" id="fileijasah" accept="image/jpeg, image/png, .doc, .docx, .pdf" />
                 </div>
             </div>
             <div class="form-group">
