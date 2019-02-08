@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index Claim";
 }
-<h3>Master Request Claim</h3>
+<h3>Master Claim Medical</h3>
 @if (Session["jabatan"].ToString() == "s")
 {
     <a onclick="EditSaldo()" data-toggle="modal" style="text-decoration-line:none;" class="btn btn-primary"><i class="fa fa-money-bill-alt"></i> Ubah Saldo Awal</a>
@@ -10,7 +10,7 @@
 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#listrequest">List Request</a></li>
     <li><a data-toggle="tab" href="#listreject">List Reject</a></li>
-    <li><a data-toggle="tab" href="#riwayatclaim">Riwayat Claim</a></li>
+    <li><a data-toggle="tab" href="#riwayatclaim">Claim History</a></li>
     @*<li id="tab1"><a data-toggle="tab" href="#detailclaim">Detail Claim</a></li>*@
     @*<li id="tab2"><a data-toggle="tab" href="#editclaim">Reject Claim</a></li>*@
 </ul>

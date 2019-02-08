@@ -3,13 +3,13 @@
     ViewBag.Title = "Cek Cuti";
     Layout = "~/Views/Shared/_Layoutuser.cshtml";
 }
-<h3>Halaman Cuti</h3>
+<h3>Annual Leave</h3>
 <a href="#" data-toggle="modal" data-target="#myModal" style="text-decoration-line:none;" class="btn btn-primary"><i class="fa fa-money-bill-alt"></i> Cek Cuti</a>
 <hr />
 <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#riwayatcuti">Riwayat Cuti</a></li>
-    <li><a data-toggle="tab" href="#cutimassal">Riwayat Cuti Massal</a></li>
-    <li id="tab1"><a data-toggle="tab" href="#detailcuti">Detail Cuti</a></li>
+    <li class="active"><a data-toggle="tab" href="#riwayatcuti">History</a></li>
+    <li><a data-toggle="tab" href="#cutimassal">Holiday History</a></li>
+    <li id="tab1"><a data-toggle="tab" href="#detailcuti">Detail</a></li>
 </ul>
 <div class="tab-content">
     <div id="riwayatcuti" class="tab-pane fade in active">@Html.Action("RiwayatCutiK")</div>
