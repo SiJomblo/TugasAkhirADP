@@ -4,219 +4,223 @@
     ViewBag.Title = "Edit";
     Layout = null;
 }
-
-@using (Html.BeginForm("Edit", "users", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "return ajaxedit(this);", data_restUrl = Url.Action("Edit", "users")}))
-{
-    @Html.AntiForgeryToken()
-    <div class="form-horizontal">
-        <div class="row">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.foto_profil)
-            @Html.HiddenFor(model => model.nik)
-            @Html.HiddenFor(model => model.status_kerja)
-            @Html.HiddenFor(model => model.jabatan)
-            @Html.HiddenFor(model => model.penempatan)
-            <div class="col-md-6">
-                <div class="form-group" id="confirnip">
-                    @Html.LabelFor(model => model.nip, "NIP", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @if (Session["jabatan"].ToString() == "s")
-                        {
-                            @Html.EditorFor(model => model.nip, new { htmlAttributes = new { @class = "form-control", onkeyup = "CheckNIPEdit()" } })
-                            <span class="glyphicon glyphicon-ok form-control-feedback" id="spannip1"></span>
-                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" id="spannip2"></span>
-                        }
-                        else
-                        {
-                            @Html.EditorFor(model => model.nip, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                        }
-                        @Html.ValidationMessageFor(model => model.nip, "", new { @class = "text-danger" })
-                    </div>
-                </div>              
-                <div class="form-group">
-                    @Html.LabelFor(model => model.nama, "Nama", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.EditorFor(model => model.nama, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                        @Html.ValidationMessageFor(model => model.nama, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group" id="confir2">
-                    @Html.LabelFor(model => model.email, "E-Mail", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", type = "email", required = "required", onkeyup = "CheckEmailEdit()" } })
-                        <span class="glyphicon glyphicon-ok form-control-feedback" id="spanemail1"></span>
-                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" id="spanemail2"></span>
-                        @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
-                    </div>
-                </div>              
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.tempat_lahir, "Tempat Lahir", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.EditorFor(model => model.tempat_lahir, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.tempat_lahir, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.tanggal_lahir, "Tanggal Lahir", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.TextBoxFor(model => model.tanggal_lahir, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.jenis_kelamin, "Jenis Kelamin", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.DropDownListFor(x => x.jenis_kelamin, new List<SelectListItem>
-                        {
-                        new SelectListItem() {Text = "Laki-Laki", Value="L"},
-                        new SelectListItem() {Text = "Perempuan", Value="P"}
-                        }, htmlAttributes: new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.no_hp, "No. Handphone", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.EditorFor(model => model.no_hp, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return hanyaAngka(event)", maxlength = "13" } })
-                        @Html.ValidationMessageFor(model => model.no_hp, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.pendidikan_akhir, "Pendidikan", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.DropDownListFor(x => x.pendidikan_akhir, new List<SelectListItem>
-                         {
-                         new SelectListItem() {Text = "SMA", Value="SMA"},
-                         new SelectListItem() {Text = "D3", Value="D3"},
-                         new SelectListItem() {Text = "Sarjana", Value="S1"},
-                         new SelectListItem() {Text = "Magister", Value="S2"},
-                         new SelectListItem() {Text = "Doktor", Value="S3"}
-                         }, htmlAttributes: new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.jurusan, "Jurusan", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.EditorFor(model => model.jurusan, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.jurusan, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.foto_profil, "Foto", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        <img src="@Url.Content(Model.foto_profil)" class="img-circle" style="margin:10px;" width="200" height="200" id="imagePreview" />
-                        <input type="file" name="foto" accept="image/jpeg, image/png" onchange="ShowImagePreview(this, document.getElementById('imagePreview'))" />
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.agama, "Agama", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.DropDownListFor(x => x.agama, new List<SelectListItem>
-                         {
-                         new SelectListItem() {Text = "Islam", Value="Islam"},
-                         new SelectListItem() {Text = "Kristen", Value="Kristen"},
-                         new SelectListItem() {Text = "Katolik", Value="Katolik"},
-                         new SelectListItem() {Text = "Hindu", Value="Hindu"},
-                         new SelectListItem() {Text = "Buddha", Value="Buddha"},
-                         new SelectListItem() {Text = "Kong Hu Cu", Value="Kong Hu Cu"}
-                         }, htmlAttributes : new { @class = "form-control"} )
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.npwp, "NPWP", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.EditorFor(model => model.npwp, new { htmlAttributes = new { @class = "form-control", @pattern = "[0-9]{2}[.][0-9]{3}[.][0-9]{3}[.][0-9]{1}[-][0-9]{3}[.][0-9]{3}" } })
-                        @Html.ValidationMessageFor(model => model.npwp, "", new { @class = "text -danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.status_pajak, "Status Pajak", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.EditorFor(model => model.status_pajak, new { htmlAttributes = new { @class = "form-control", @pattern = "[0-9]{1}" } })
-                        @Html.ValidationMessageFor(model => model.status_pajak, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.join_date, "Join Date", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @if (Model.join_date == null)
-                        {
-                            @Html.EditorFor(model => model.join_date, new { htmlAttributes = new { @class = "form-control", Type = "Date", @required = "required" } })
-                        }
-                        else
-                        {
-                            @Html.HiddenFor(model => model.join_date, "{0:yyyy-MM-dd}")
-                            @Html.TextBox("joindate", String.Format("{0:dd MMMM yyyy}", Model.join_date), htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-                        }
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.no_rekening, "No. Rekening", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.EditorFor(model => model.no_rekening, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return hanyaAngka(event)"} })
-                        @Html.ValidationMessageFor(model => model.no_rekening, "", new { @class = "text-danger"})
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.alamat_domisili, "Alamat Domisili", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.TextAreaFor(model => model.alamat_domisili, new { @class = "form-control", @rows = "3" })
-                        @Html.ValidationMessageFor(model => model.alamat_domisili, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.no_ktp, "No. KTP", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.EditorFor(model => model.no_ktp, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return hanyaAngka(event)", maxlength = "16" } })
-                        @Html.ValidationMessageFor(model => model.no_ktp, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.alamat_ktp, "Alamat KTP", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        @Html.TextAreaFor(model => model.alamat_ktp, new { @class = "form-control", @rows = "3" })
-                        @Html.ValidationMessageFor(model => model.alamat_ktp, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.file_ktp, "KTP", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        <input type="file" name="filektp" accept="image/jpeg, image/png, .doc, .docx, .pdf" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.file_npwp, "NPWP", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        <input type="file" name="filenpwp" accept="image/jpeg, image/png, .doc, .docx, .pdf" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.file_rekening, "Rekening", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        <input type="file" name="filerekening" accept="image/jpeg, image/png, .doc, .docx, .pdf" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.file_ijasah, "Ijasah", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-9">
-                        <input type="file" name="fileijasah" accept="image/jpeg, image/png, .doc, .docx, .pdf" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-3 col-md-4">
-                        <input type="submit" value="Submit" class="btn btn-primary" />
-                    </div>
-                </div>
-            </div>
-        </div>        
+@*<form id="regexpForm" class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Full name</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" name="fullName" />
+        </div>
     </div>
+</form>*@
+@using (Html.BeginForm("Edit", "users", FormMethod.Post, new { id="billy",  @class="form-horizontal", enctype = "multipart/form-data", onSubmit = "return ajaxedit(this);", data_restUrl = Url.Action("Edit", "users") }))
+{
+    @Html.AntiForgeryToken()      
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.foto_profil)
+        @Html.HiddenFor(model => model.nik)
+        @Html.HiddenFor(model => model.status_kerja)
+        @Html.HiddenFor(model => model.jabatan)
+        @Html.HiddenFor(model => model.penempatan)
+        <div class="col-md-6 ">               
+            <div class="form-group" id="confirnip">
+                @Html.LabelFor(model => model.nip, "NIP", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @if (Session["jabatan"].ToString() == "s")
+                    {
+                        @Html.EditorFor(model => model.nip, new { htmlAttributes = new { @class = "form-control", onkeyup = "CheckNIPEdit()" } })
+                        <span class="glyphicon glyphicon-ok form-control-feedback" id="spannip1"></span>
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" id="spannip2"></span>
+                    }
+                    else
+                    {
+                        @Html.EditorFor(model => model.nip, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    }
+                    @Html.ValidationMessageFor(model => model.nip, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.nama, "Nama", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.nama, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.nama, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" id="confir2">
+                @Html.LabelFor(model => model.email, "E-Mail", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", type="text", onkeyup = "CheckEmailEdit()" } })
+                    <span class="glyphicon glyphicon-ok form-control-feedback" id="spanemail1"></span>
+                    <span class="glyphicon glyphicon-remove form-control-feedback" id="spanemail2"></span>
+                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.tempat_lahir, "Tempat Lahir", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.tempat_lahir, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.tempat_lahir, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.tanggal_lahir, "Tanggal Lahir", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.TextBoxFor(model => model.tanggal_lahir, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.jenis_kelamin, "Jenis Kelamin", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.DropDownListFor(x => x.jenis_kelamin, new List<SelectListItem>
+                    {
+                    new SelectListItem() {Text = "Laki-Laki", Value="L"},
+                    new SelectListItem() {Text = "Perempuan", Value="P"}
+                    }, htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.no_hp, "No. Handphone", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.no_hp, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return hanyaAngka(event)", maxlength = "13" } })
+                    @Html.ValidationMessageFor(model => model.no_hp, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.pendidikan_akhir, "Pendidikan", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.DropDownListFor(x => x.pendidikan_akhir, new List<SelectListItem>
+                        {
+                        new SelectListItem() {Text = "SMA", Value="SMA"},
+                        new SelectListItem() {Text = "D3", Value="D3"},
+                        new SelectListItem() {Text = "Sarjana", Value="S1"},
+                        new SelectListItem() {Text = "Magister", Value="S2"},
+                        new SelectListItem() {Text = "Doktor", Value="S3"}
+                        }, htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.jurusan, "Jurusan", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.jurusan, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.jurusan, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.foto_profil, "Foto", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    <img src="@Url.Content(Model.foto_profil)" class="img-circle" style="margin:10px;" width="200" height="200" id="imagePreview" />
+                    <input type="file" name="foto" accept="image/jpeg, image/png" onchange="ShowImagePreview(this, document.getElementById('imagePreview'))" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.agama, "Agama", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.DropDownListFor(x => x.agama, new List<SelectListItem>
+                        {
+                        new SelectListItem() {Text = "Islam", Value="Islam"},
+                        new SelectListItem() {Text = "Kristen", Value="Kristen"},
+                        new SelectListItem() {Text = "Katolik", Value="Katolik"},
+                        new SelectListItem() {Text = "Hindu", Value="Hindu"},
+                        new SelectListItem() {Text = "Buddha", Value="Buddha"},
+                        new SelectListItem() {Text = "Kong Hu Cu", Value="Kong Hu Cu"}
+                        }, htmlAttributes : new { @class = "form-control"} )
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.npwp, "NPWP", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.npwp, new { htmlAttributes = new { @class = "form-control", @MaxLength="20"} })
+                    @Html.ValidationMessageFor(model => model.npwp, "", new { @class = "text -danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.status_pajak, "Status Pajak", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.status_pajak, new { htmlAttributes = new { @class = "form-control", @pattern = "[0-9]{1}" } })
+                    @Html.ValidationMessageFor(model => model.status_pajak, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.join_date, "Join Date", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @if (Model.join_date == null)
+                    {
+                        @Html.EditorFor(model => model.join_date, new { htmlAttributes = new { @class = "form-control", Type = "Date", @required = "required" } })
+                    }
+                    else
+                    {
+                        @Html.HiddenFor(model => model.join_date, "{0:yyyy-MM-dd}")
+                        @Html.TextBox("joindate", String.Format("{0:dd MMMM yyyy}", Model.join_date), htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.no_rekening, "No. Rekening", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.no_rekening, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return hanyaAngka(event)"} })
+                    @Html.ValidationMessageFor(model => model.no_rekening, "", new { @class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.alamat_domisili, "Alamat Domisili", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.TextAreaFor(model => model.alamat_domisili, new { @class = "form-control", @rows = "3" })
+                    @Html.ValidationMessageFor(model => model.alamat_domisili, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.no_ktp, "No. KTP", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.no_ktp, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return hanyaAngka(event)", maxlength = "16" } })
+                    @Html.ValidationMessageFor(model => model.no_ktp, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.alamat_ktp, "Alamat KTP", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.TextAreaFor(model => model.alamat_ktp, new { @class = "form-control", @rows = "3" })
+                    @Html.ValidationMessageFor(model => model.alamat_ktp, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.file_ktp, "KTP", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    <input type="file" name="filektp" accept="image/jpeg, image/png, .doc, .docx, .pdf" />
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.file_npwp, "NPWP", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    <input type="file" name="filenpwp" accept="image/jpeg, image/png, .doc, .docx, .pdf" />
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.file_rekening, "Rekening", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    <input type="file" name="filerekening" accept="image/jpeg, image/png, .doc, .docx, .pdf" />
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.file_ijasah, "Ijasah", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    <input type="file" name="fileijasah" accept="image/jpeg, image/png, .doc, .docx, .pdf" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-4">
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    
 }
+    

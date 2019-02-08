@@ -1,5 +1,4 @@
-﻿<!DOCTYPE html>
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layoutuser.cshtml";
 }
@@ -66,6 +65,9 @@
         </div>
     </div>
 </div>
+
+
+
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 @section scripts{
@@ -73,7 +75,50 @@
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src=" https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
 
-    <script>
+    <script>        
+        $(document).ready(function () {
+            tolol();
+        });
+        function tolol() {
+            $('#billy').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    npwp: {
+                        validators: {
+                            regexp: {
+                                regexp: /^[0-9]{2}[.][0-9]{3}[.][0-9]{3}[.][0-9]{1}[-][0-9]{3}[.][0-9]{3}/,
+                                message: 'Format NPWP Salah Ex: 12.345.678.9-123.000'                                
+                            }
+                        }
+                    },
+                    nama: {
+                        validators: {
+                            regexp: {                               
+                                regexp: /^[a-z\s]+$/i,
+                                message: 'Nama Tidak Boleh Angka'
+                            }
+                        }
+                    },
+                    email: {
+                        validators: {
+                            notEmpty: {
+                                message : 'E-Mail tidak boleh kosong'
+                            },
+                            regexp: {
+                                regexp: /^[a-za-z0-9.!#$%&’*+/=?^_`{|}~-]+@@[a-za-z0-9-]+(?:\.[a-za-z0-9-]+)*$/,
+                                message: 'format e-mail invalid'
+                            }
+                        }
+                    }
+                }
+            });
+        };
+   
+
         function activatejQueryTable() {
             $('#a').DataTable();
         }
@@ -81,7 +126,7 @@
             activatejQueryTable();
         });
 
-        function ChangePassword() {           
+        function ChangePassword() {
             let formdata = $("#gantipass").serialize();
              var x = $("#kontoru").val();
 
@@ -113,20 +158,26 @@
                         }
                     });
         }
+        hideall();
+
         $(document).ready(function () { hideall() });
+
         function hideall() {
-            $("#spanemail1").hide();
-            $("#spanemail2").hide();
+            $('#spanemail1').hide();
+            $('#spanemail2').hide();           
         }
 
         function CheckEmailEdit() {
-            email = $('#email').val();
-            $.ajax({
-                type: "POST",
-                url: "users/JsonGetEmailEdit",
-                data: { em: email },
-                success: function (result) {
-                    if (result != "NULL") {
+            $.post("@Url.Action("JsonGetEmailEdit", "users")",
+                {
+                    userdata: $("#email").val()                 
+                },
+                function (data) {
+                    if (data == 2) {                   
+                        $("#confir2").attr("class", "form-group has-success has-feedback");
+                        $("#spanemail1").show();
+                        $("#spanemail2").hide();
+                    } else if (data == 1) {                    
                         $("#confir2").attr("class", "form-group has-error has-feedback");
                         $("#spanemail1").hide();
                         $("#spanemail2").show();
@@ -135,11 +186,10 @@
                         $("#spanemail1").show();
                         $("#spanemail2").hide();
                     }
-                },
-            });
-        };
+                });
+        }
 
-       
+
         function ajaxedit(form) {
             $.validator.unobtrusive.parse(form);
             if ($(form).valid()) {
@@ -152,12 +202,15 @@
                             $("#Profile").html(response.html);
                             $('ul.nav.nav-tabs a:eq(0)').tab('show');
                             hideall();
+                            $('.notifyjs-corner').remove();
                             $.notify(response.message, "success");
                             if (typeof activatejQueryTable !== 'undefined' && $.isFunction(activatejQueryTable)) {
                                 activatejQueryTable();
+                                tolol();
                             }
                         }
                         else {
+                            $('.notifyjs-corner').remove();
                             $.notify(response.message, "error");
                         }
                     }
@@ -198,6 +251,6 @@
         //        return (this.optional(element) || new RegExp(element.pattern).test(value));
         //    };
         //    $.validator.messages.pattern = "<font color='red'>Format Salah Ex: 12.345.678.9-123.000</font>";
-        //});           
+        //});
     </script>
 }
