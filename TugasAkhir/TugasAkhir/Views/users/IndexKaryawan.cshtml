@@ -78,6 +78,7 @@
     <script>        
         $(document).ready(function () {
             tolol();
+            $("#errormsg").hide();
         });
         function tolol() {
             $('#billy').bootstrapValidator({
@@ -111,6 +112,16 @@
                             regexp: {
                                 regexp: /^[a-za-z0-9.!#$%&’*+/=?^_`{|}~-]+@@[a-za-z0-9-]+(?:\.[a-za-z0-9-]+)*$/,
                                 message: 'format e-mail invalid'
+                            }
+                        }
+                    },
+                    filektp: {
+                        validators: {
+                            file: {
+                                extension: 'jpeg,jpg,png,pdf',
+                                type: 'image/png,image/jpg,image/jpeg,file/pdf',
+                                maxSize: 2048 * 1024,
+                                message: 'Format file salah, ukuran max 2Mb!'
                             }
                         }
                     }
@@ -158,33 +169,44 @@
                         }
                     });
         }
-        hideall();
-
         $(document).ready(function () { hideall() });
-
         function hideall() {
             $('#spanemail1').hide();
             $('#spanemail2').hide();           
         }
 
         function CheckEmailEdit() {
+            $("#errormsg").hide();
             $.post("@Url.Action("JsonGetEmailEdit", "users")",
                 {
                     userdata: $("#email").val()                 
                 },
                 function (data) {
-                    if (data == 2) {                   
-                        $("#confir2").attr("class", "form-group has-success has-feedback");
-                        $("#spanemail1").show();
-                        $("#spanemail2").hide();
-                    } else if (data == 1) {                    
-                        $("#confir2").attr("class", "form-group has-error has-feedback");
-                        $("#spanemail1").hide();
-                        $("#spanemail2").show();
+                    if (data == 2) {
+                        if ($("i").hasClass("glyphicon-remove")) {
+                            $("#spanemail1").hide();
+                        }
+                        else {
+                            $("#confir2").attr("class", "form-group has-success has-feedback");
+                            $('.glyphicon-remove').hide();
+                            $("#spanemail1").show();
+                            $("#spanemail2").hide();
+                        }               
+                    } else if (data == 1) {      
+                            $("#confir2").attr("class", "form-group has-error has-feedback");
+                            $('.glyphicon-ok').hide();
+                            $("#errormsg").show();
+                            $("#spanemail1").hide();
+                            $("#spanemail2").show();
                     } else {
-                        $("#confir2").attr("class", "form-group has-success has-feedback");
-                        $("#spanemail1").show();
-                        $("#spanemail2").hide();
+                        if ($("i").hasClass("glyphicon-remove")) {
+                            $("#spanemail1").hide();
+                        }
+                        else {
+                            $("#confir2").attr("class", "form-group has-success has-feedback");
+                            $("#spanemail1").show();
+                            $("#spanemail2").hide();
+                        }               
                     }
                 });
         }
@@ -251,6 +273,6 @@
         //        return (this.optional(element) || new RegExp(element.pattern).test(value));
         //    };
         //    $.validator.messages.pattern = "<font color='red'>Format Salah Ex: 12.345.678.9-123.000</font>";
-        //});
+        //});           
     </script>
 }

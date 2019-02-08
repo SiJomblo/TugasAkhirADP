@@ -15,6 +15,7 @@ namespace TugasAkhir.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
     using System.Web;
+    using System.Web.Mvc;
 
     public partial class user
     {
@@ -29,7 +30,7 @@ namespace TugasAkhir.Models
         }
 
         public int nik { get; set; }
-        public string nama { get; set; }
+        public string nama { get; set; }   
         public string email { get; set; }
         [StringLength(100, ErrorMessage = "Panjang password minimal 6 karakter", MinimumLength = 6)]
         public string password { get; set; }

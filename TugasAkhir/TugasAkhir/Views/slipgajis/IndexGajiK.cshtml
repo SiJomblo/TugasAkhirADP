@@ -4,14 +4,14 @@
     Layout = "~/Views/Shared/_Layoutuser.cshtml";
 }
 
-<h3 class="text-left">Request Slip Gaji</h3>
+<h3 class="text-left">Request Payslip</h3>
 <a href="#" class="btn btn-success text-right" onclick="modal()"><i class="fa fa-plus"></i> Add Request</a>
 
 <hr />
 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#request">Request</a></li>
     <li><a data-toggle="tab" href="#process">Process</a></li>
-    <li><a data-toggle="tab" href="#riwayat">Riwayat</a></li>
+    <li><a data-toggle="tab" href="#riwayat">History</a></li>
 </ul>
 <div class="tab-content">
     <div id="request" class="tab-pane fade in active">@Html.Action("RequestGajiK")</div>
