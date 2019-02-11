@@ -526,6 +526,7 @@ namespace TugasAkhir.Controllers
                 users.jurusan = emp.jurusan;
                 users.agama = emp.agama;
                 users.npwp = emp.npwp;
+                users.bpjs = emp.bpjs;
                 users.status_pajak = emp.status_pajak;
                 users.status_kerja = emp.status_kerja;
                 users.no_rekening = emp.no_rekening;

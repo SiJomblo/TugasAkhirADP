@@ -109,7 +109,6 @@
                 </div>
             </div>
 
-
             <div class="form-group">
                 @Html.LabelFor(model => model.foto_profil, "Foto", htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
@@ -136,16 +135,23 @@
                 </div>
             </div>
             <div class="form-group">
+                @Html.LabelFor(model => model.bpjs, "BPJS", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.bpjs, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.bpjs, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
                 @Html.LabelFor(model => model.npwp, "NPWP", htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
-                    @Html.EditorFor(model => model.npwp, new { htmlAttributes = new { @class = "form-control", @MaxLength="20"} })
+                    @Html.EditorFor(model => model.npwp, new { htmlAttributes = new { @class = "form-control", @MaxLength = "20" } })
                     @Html.ValidationMessageFor(model => model.npwp, "", new { @class = "text -danger" })
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.status_pajak, "Status Pajak", htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
-                    @Html.EditorFor(model => model.status_pajak, new { htmlAttributes = new { @class = "form-control", @pattern = "[0-9]{1}" } })
+                    @Html.EditorFor(model => model.status_pajak, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.status_pajak, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -166,8 +172,8 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.no_rekening, "No. Rekening", htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-7">
-                    @Html.EditorFor(model => model.no_rekening, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return hanyaAngka(event)"} })
-                    @Html.ValidationMessageFor(model => model.no_rekening, "", new { @class = "text-danger"})
+                    @Html.EditorFor(model => model.no_rekening, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return hanyaAngka(event)" } })
+                    @Html.ValidationMessageFor(model => model.no_rekening, "", new { @class = "text-danger" })
                 </div>
             </div>
 
