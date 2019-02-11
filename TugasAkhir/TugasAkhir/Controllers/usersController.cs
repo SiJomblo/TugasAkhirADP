@@ -413,9 +413,10 @@ namespace TugasAkhir.Controllers
         [HttpPost]
         public ActionResult Edit(user emp, cuti_user jatahcuti, saldo_medical saldo)
         {
-            try
-            {
-                user users = db.users.Find(emp.nik);
+            //try
+            //{
+            int id = Convert.ToInt32(Session["nik"]);
+                user users = db.users.Find(id);
                 if (users.email != emp.email)
                 {
                     var cekemail = db.users.Where(u => u.email == emp.email).FirstOrDefault();
@@ -534,12 +535,12 @@ namespace TugasAkhir.Controllers
                 db.Entry(users).State = EntityState.Modified;
                 db.SaveChanges();
                 return Json(new { success = true, html = Global.RenderRazorViewToString(this, "Details", GetDetail()), message = "Edit Data Sukses" }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
+           // }
+            //catch (Exception ex)
+            //{
 
-                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
-            }
+            //    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            //}
         }
 
         public ActionResult ChangePassword(FormCollection get)
