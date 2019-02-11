@@ -30,6 +30,7 @@
                         @Html.EditorFor(model => model.nip, new { htmlAttributes = new { @class = "form-control", onkeyup = "CheckNIPEdit()" } })
                         <span class="glyphicon glyphicon-ok form-control-feedback" id="spannip1"></span>
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" id="spannip2"></span>
+                        <p id="errormsg2" style="color:red">NIP sudah terdaftar</p>
                     }
                     else
                     {

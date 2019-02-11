@@ -35,19 +35,19 @@
                     <div class="form-group">
                         @Html.Label("Old Password", new { @class = "control-label col-md-4" })
                         <div class="col-md-6">
-                            <input type="password" class="form-control" name="old" />
+                            <input type="password" class="form-control" name="old" autocomplete="off" />
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.Label("New Password", new { @class = "control-label col-md-4" })
                         <div class="col-md-6">
-                            <input type="password" class="form-control" name="new" id="kontoru" />
+                            <input type="password" class="form-control" name="new" id="kontoru" autocomplete="off" />
                         </div>
                     </div>
                     <div class="form-group" id="confir">
                         @Html.Label("Confirm New Password", new { @class = "control-label col-md-4" })
                         <div class="col-md-6">
-                            <input type="password" class="form-control" name="confirmnew" id="kontoru1" onkeyup="CheckPass()" />
+                            <input type="password" class="form-control" name="confirmnew" id="kontoru1" onkeyup="CheckPass()" autocomplete="off" />
                             <span class="glyphicon glyphicon-ok form-control-feedback" id="span1"></span>
                             <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" id="span2"></span>
                         </div>
@@ -121,7 +121,7 @@
                                 extension: 'jpeg,jpg,png',
                                 type: 'image/png,image/jpg,image/jpeg',
                                 maxSize: 2048 * 1024,
-                                message: 'Format file salah, ukuran max 2Mb!'
+                                message: 'Format file yang diperbolehkan : png,jpg,jpeg dengan ukuran max 2Mb!'
                             },
                         }
                     },
@@ -131,7 +131,7 @@
                                 extension: 'jpeg,jpg,png,pdf',
                                 type: 'image/png,image/jpg,image/jpeg,application/pdf',
                                 maxSize: 2048 * 1024,
-                                message: 'Format file salah, ukuran max 2Mb!'
+                                message: 'Format file yang diperbolehkan : png,jpg,jpeg,pdf dengan ukuran max 2Mb!'
                             },
                         }
                     },
@@ -141,7 +141,7 @@
                                 extension: 'jpeg,jpg,png,pdf',
                                 type: 'image/png,image/jpg,image/jpeg,application/pdf',
                                 maxSize: 2048 * 1024,
-                                message: 'Format file salah, ukuran max 2Mb!'
+                                message: 'Format file yang diperbolehkan : png,jpg,jpeg,pdf dengan ukuran max 2Mb!'
                             }
                         }
                     },
@@ -151,7 +151,7 @@
                                 extension: 'jpeg,jpg,png,pdf',
                                 type: 'image/png,image/jpg,image/jpeg,application/pdf',
                                 maxSize: 2048 * 1024,
-                                message: 'Format file salah, ukuran max 2Mb!'
+                                message: 'Format file yang diperbolehkan : png,jpg,jpeg,pdf dengan ukuran max 2Mb!'
                             }
                         }
                     },
@@ -161,7 +161,7 @@
                                 extension: 'jpeg,jpg,png,pdf',
                                 type: 'image/png,image/jpg,image/jpeg,application/pdf',
                                 maxSize: 2048 * 1024,
-                                message: 'Format file salah, ukuran max 2Mb!'
+                                message: 'Format file yang diperbolehkan : png,jpg,jpeg,pdf dengan ukuran max 2Mb!'
                             }
                         }
                     }
@@ -215,7 +215,8 @@
             $('#spanemail2').hide();           
         }
 
-        function CheckEmailEdit() {
+        
+       function CheckEmailEdit() {
             $("#errormsg").hide();
             $.post("@Url.Action("JsonGetEmailEdit", "users")",
                 {
