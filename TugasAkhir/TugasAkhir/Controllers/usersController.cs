@@ -527,6 +527,7 @@ namespace TugasAkhir.Controllers
                 users.jurusan = emp.jurusan;
                 users.agama = emp.agama;
                 users.npwp = emp.npwp;
+                users.bpjs = emp.bpjs;
                 users.status_pajak = emp.status_pajak;
                 users.status_kerja = emp.status_kerja;
                 users.no_rekening = emp.no_rekening;
@@ -545,10 +546,6 @@ namespace TugasAkhir.Controllers
 
         public ActionResult ChangePassword(FormCollection get)
         {
-            //if(get["new"] == "")
-            //{
-            //    return Json(new { success = false, message = "abdul tai!" }, JsonRequestBehavior.AllowGet);
-            //}
             int id = Convert.ToInt32(Session["nik"]);
             user user = db.users.Find(id);
             string oldpass = md5.encryption(get["old"]);
@@ -601,39 +598,6 @@ namespace TugasAkhir.Controllers
 
         }
 
-        public JsonResult JsonGetEmailEditA(string ema, int id)
-        {
-            user users = db.users.Find(id);
-            if (users.email == ema)
-            {
-                return Json("NULL", JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                var emp = db.users.Where(u => u.email == ema).FirstOrDefault();
-                if (emp == null)
-                {
-                    return Json("NULL", JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    return Json("NOT NULL", JsonRequestBehavior.AllowGet);
-                }
-            }
-
-        }
-
-
-        public JsonResult JsonGetEmail(string em)
-        {
-            var emp = db.users.Where(u => u.email == em).FirstOrDefault();
-            if (emp == null)
-            {
-                return Json("NULL", JsonRequestBehavior.AllowGet);
-            }
-            return Json(emp.email, JsonRequestBehavior.AllowGet);
-        }
-
         public JsonResult JsonGetNIPEdit(string userdata)
         {
             int id = Convert.ToInt32(Session["nik"]);
@@ -656,36 +620,6 @@ namespace TugasAkhir.Controllers
             }
 
         }
-
-        public JsonResult JsonCheckNIPEditA(string nip, int id)
-        {
-            user users = db.users.Find(id);
-            if (users.nip == nip)
-            {
-                return Json("NULL", JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                var emp = db.users.Where(u => u.nip == nip).FirstOrDefault();
-                if (emp == null)
-                {
-                    return Json("NULL", JsonRequestBehavior.AllowGet);
-                }
-                return Json(emp.nip, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-
-        public JsonResult JsonCheckNIP(string id)
-        {
-            var emp = db.users.Where(u => u.nip == id).FirstOrDefault();
-            if (emp == null)
-            {
-                return Json("NULL", JsonRequestBehavior.AllowGet);
-            }
-            return Json(emp.email, JsonRequestBehavior.AllowGet);
-        }
-
 
         protected override void Dispose(bool disposing)
         {
